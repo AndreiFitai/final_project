@@ -12,7 +12,11 @@ body {
 }
 
 .container {
-    padding: 25px calc((100vw - 960px) / 2);
+    padding: 25px calc((70vw - 960px) / 2);
+
+    @media (max-width: 1400px) {
+        padding: 25px 10px;
+    }
 
     @media (max-width: 980px) {
         padding: 25px 10px;

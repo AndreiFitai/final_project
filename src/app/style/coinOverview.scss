@@ -1,0 +1,16 @@
+.coinContainer {
+  height: 10vh;
+  width: 80vw;
+  background: lightgrey;
+  margin: 10px 0;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-evenly;
+
+  img {
+    background: white;
+    border-radius: 10px;
+    height: 5vh;
+  }
+}

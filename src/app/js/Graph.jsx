@@ -1,5 +1,6 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
+import axios from "axios";
 
 const data = {
   labels: ["January", "February", "March", "April", "May", "June", "July"],
@@ -31,7 +32,7 @@ const data = {
 const Graph = props => {
   return (
     <div>
-      <h2>Line Example</h2>
+      <h2>Graph example</h2>
       <Line data={data} />
     </div>
   );

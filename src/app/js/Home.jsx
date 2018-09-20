@@ -1,6 +1,5 @@
 import React from "react";
 import CoinTab from "./CoinTab";
-import axios from "axios";
 
 const Home = props => {
   let coinTabs;

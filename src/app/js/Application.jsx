@@ -9,6 +9,7 @@ import Navigation from "./Navigation";
 import Profile from "./Profile";
 import NotFound from "./NotFound";
 import api from "./utils/api";
+import { subscribeToTimer, getData } from "./utils/timer";
 
 class Application extends React.Component {
   constructor(props) {
@@ -16,8 +17,24 @@ class Application extends React.Component {
 
     this.state = {
       user: this._setUser(true),
-      top10Coins: null
+      top10Coins: null,
+      timestamp: "no timestamp yet",
+      priceData: null
     };
+
+    subscribeToTimer((err, timestamp) => {
+      console.log("called");
+      this.setState({
+        timestamp
+      });
+    });
+
+    getData((err, priceData) => {
+      console.log("reactpricedata", priceData);
+      this.setState({
+        priceData
+      });
+    });
 
     this._setUser = this._setUser.bind(this);
     this._resetUser = this._resetUser.bind(this);
@@ -34,7 +51,7 @@ class Application extends React.Component {
     return (
       <BrowserRouter>
         <div>
-          <Navigation user={this.state.user} />
+          <Navigation user={this.state.user} time={this.state.timestamp} />
           <Switch>
             <Route
               exact

@@ -1,24 +1,29 @@
-const axios = require("axios")
-const config = require("../config")
-const CronJob = require("cron").CronJob
+const axios = require("axios");
+const config = require("../config");
+const CronJob = require("cron").CronJob;
 
-let data;
+let data = [];
 
+new CronJob(
+  "*/5 * * * * *",
+  function() {
+    axios
+      .get(`http://localhost:3000/api/coin/prices`)
+      .then(result => {
+        data = result.data;
+      })
+      .catch(error => {
+        console.log(error);
+        res.send("error");
+      });
+  },
+  null,
+  true,
+  "Europe/Berlin"
+);
 
-new CronJob('* * * * * *', function () {
-  axios.get(`https://api.nomics.com/v1/prices?key=${config.NOMICS_API}`).then(result => {
-    data = result.data
-  }).catch(error => {
-    console.log(error);
-    res.send('error')
-  });
-}, null, true, 'America/Los_Angeles');
-
-function priceData() {
-  console.log(data)
-  return data
+function getPrices() {
+  return data;
 }
 
-module.exports = {
-  priceData
-}
+module.exports = getPrices;

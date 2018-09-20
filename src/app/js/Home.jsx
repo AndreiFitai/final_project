@@ -2,27 +2,22 @@ import React from "react";
 import CoinTab from "./CoinTab";
 
 const Home = props => {
-  let coinTabs;
-  if (props.data != null) {
-    coinTabs = props.data.map((el, index) => {
-      let coin = {};
-      coin.fullName = el.CoinInfo.FullName;
-      coin.name = el.CoinInfo.Name;
-      coin.img = el.CoinInfo.ImageUrl;
-      coin.supply = el.ConversionInfo.Supply;
-      coin.totalVolume = el.ConversionInfo.TotalVolume24H;
-      return (
-        <CoinTab
-          name={coin.name}
-          img={coin.img}
-          fullName={coin.fullName}
-          supply={coin.supply}
-          totalVolume={coin.totalVolume}
-          key={index}
-        />
-      );
+  const coinTabs = props.data.map((el, index) => {
+    const price = props.prices.filter(price => {
+      return el.name == price.currency;
     });
-  }
+    return (
+      <CoinTab
+        name={el.name}
+        img={el.img}
+        fullName={el.fullName}
+        price={price[0] ? price[0].price : 0}
+        supply={el.supply}
+        totalVolume={el.totalVolume}
+        key={index}
+      />
+    );
+  });
 
   return (
     <div className="container">

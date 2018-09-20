@@ -17,22 +17,21 @@ class Application extends React.Component {
 
     this.state = {
       user: this._setUser(true),
-      top10Coins: null,
+      top10Coins: [],
       timestamp: "no timestamp yet",
-      priceData: null
+      priceData: [],
+      sparkline: []
     };
 
     subscribeToTimer((err, timestamp) => {
-      console.log("called");
       this.setState({
         timestamp
       });
     });
 
-    getData((err, priceData) => {
-      console.log("reactpricedata", priceData);
+    getData((err, data) => {
       this.setState({
-        priceData
+        priceData: data
       });
     });
 
@@ -44,6 +43,9 @@ class Application extends React.Component {
     this._setUser();
     axios.get("http://localhost:3000/api/coin/top10").then(result => {
       this.setState({ top10Coins: result.data });
+    });
+    axios.get("http://localhost:3000/api/coin/sparkline").then(result => {
+      this.setState({ sparkline: result.data });
     });
   }
 
@@ -57,7 +59,12 @@ class Application extends React.Component {
               exact
               path="/"
               render={() => (
-                <Home user={this.state.user} data={this.state.top10Coins} />
+                <Home
+                  user={this.state.user}
+                  data={this.state.top10Coins}
+                  prices={this.state.priceData}
+                  sparklines={this.state.sparkline}
+                />
               )}
             />
             <Route

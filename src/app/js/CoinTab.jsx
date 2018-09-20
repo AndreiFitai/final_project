@@ -36,6 +36,8 @@ const CoinTab = props => {
       <br />
       <p>{props.fullName}</p>
       <br />
+      <p>price: {props.price}</p>
+      <br />
       <p>{props.supply}</p>
       <br />
       <p>{props.totalVolume}</p>
@@ -76,7 +78,7 @@ const CoinTab = props => {
           }
         }}
         width={200}
-        height={100}
+        height={80}
       />
     </div>
   );

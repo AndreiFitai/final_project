@@ -3,6 +3,7 @@ const router = express.Router();
 const axios = require("axios");
 const config = require("../../config");
 const moment = require("moment");
+const CoinHistory = require("../../models/CoinHistory");
 
 let filteredCoinNames = [];
 
@@ -22,18 +23,11 @@ router.get("/prices", (req, res) => {
     });
 });
 
-//gets historical data of coins -> data is split in days/week/month/year each containing all the coins
-router.get("/sparkline", (req, res) => {
-  axios
-    .get(`https://api.nomics.com/v1/sparkline?key=${config.NOMICS_API}`)
-    .then(result => {
-      console.log("sparkline api called");
-      res.send(result.data);
-    })
-    .catch(error => {
-      console.log(error);
-      res.send("error");
-    });
+//gets historical data of coins from db -> data is split in days/week/month/year each containing all the coins
+router.get("/history", (req, res) => {
+  CoinHistory.find({ currency: { $in: [...filteredCoinNames] } }).then(data => {
+    res.send(data);
+  });
 });
 
 //gets top10 coins with details and imgs

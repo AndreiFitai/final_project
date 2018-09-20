@@ -2,7 +2,6 @@ import React from "react";
 import axios from "axios";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import jwtDecode from "jwt-decode";
-
 import Auth from "./Auth";
 import Home from "./Home";
 import Navigation from "./Navigation";
@@ -20,7 +19,7 @@ class Application extends React.Component {
       top10Coins: [],
       timestamp: "no timestamp yet",
       priceData: [],
-      sparkline: []
+      coinsHistory: []
     };
 
     subscribeToTimer((err, timestamp) => {
@@ -41,11 +40,14 @@ class Application extends React.Component {
 
   componentDidMount() {
     this._setUser();
-    axios.get("http://localhost:3000/api/coin/top10").then(result => {
+    axios.get(`/api/coin/top10`).then(result => {
       this.setState({ top10Coins: result.data });
     });
-    axios.get("http://localhost:3000/api/coin/sparkline").then(result => {
-      this.setState({ sparkline: result.data });
+    axios.get(`/api/coin/prices`).then(result => {
+      this.setState({ priceData: result.data });
+    });
+    axios.get(`/api/coin/history`).then(result => {
+      this.setState({ coinsHistory: result.data });
     });
   }
 
@@ -63,7 +65,7 @@ class Application extends React.Component {
                   user={this.state.user}
                   data={this.state.top10Coins}
                   prices={this.state.priceData}
-                  sparklines={this.state.sparkline}
+                  coinsHistory={this.state.coinsHistory}
                 />
               )}
             />

@@ -9,7 +9,13 @@ const chalk = require("chalk");
 const fs = require("fs");
 const fileUpload = require("express-fileupload");
 const io = require("socket.io")();
-const getPrices = require("./utils/data");
+const cronJobs = require("./utils/data");
+const {
+  getTop10,
+  getPrices,
+  getHistoryData,
+  getPriceData
+} = require("./utils/dbfunctions");
 
 const config = require("./config");
 
@@ -39,6 +45,10 @@ server.use(express.static(path.join(__dirname, "public")));
 server.use("/api", apiRoutes);
 server.use(appRoutes);
 
+getTop10();
+getPrices();
+getHistoryData();
+getPriceData();
 io.on("connection", client => {
   client.on("subscribeToTimer", interval => {
     console.log("client is subscribing to timer with interval ", interval);
@@ -49,7 +59,7 @@ io.on("connection", client => {
   client.on("sendData", interval => {
     console.log("client is subscribing to sendData with interval ", interval);
     setInterval(() => {
-      client.emit("priceData", getPrices());
+      client.emit("priceData", getPriceData());
     }, interval);
   });
 });

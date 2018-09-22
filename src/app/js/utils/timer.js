@@ -8,7 +8,7 @@ function subscribeToTimer(cb) {
 
 function getData(cb) {
   socket.on("priceData", getPriceData => cb(null, getPriceData));
-  socket.emit("sendData", 10000);
+  socket.emit("sendData", 5000);
 }
 
 export {

@@ -16,6 +16,7 @@ const Home = props => {
         img={el.data.imgUrl}
         fullName={el.data.fullname}
         price={price[0] ? price[0].price : "Loading..."}
+        direction={price[0] ? price[0].direction : "same"}
         dayHistory={
           history[0] ? history[0].day : { timestamps: [], closes: [] }
         }
@@ -42,6 +43,8 @@ const Home = props => {
     <div className="container">
       <h1>Hello, {props.user ? props.user.email : "Stranger"}!</h1>
       {props.data ? coinTabs : <div />}
+      <script src="./utils/ccc-streamer-utilities.js" />
+      <script src="./utils/stream.js" />
     </div>
   );
 };

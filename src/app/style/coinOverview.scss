@@ -4,7 +4,7 @@
   margin: 10px 0;
 
   .coinHeader {
-    height: 10vh;
+    height: 7vh;
     width: 80vw;
     background: lightgrey;
     margin: 10px 0;
@@ -12,11 +12,124 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-evenly;
+
+    .pricesame {
+      background-color: rgba($color: #000000, $alpha: 0.0)
+    }
+
+    @keyframes down {
+      from {
+        background-color: rgba($color: #f00, $alpha: 1.0);
+      }
+
+      to {
+        background-color: rgba($color: #f00, $alpha: 0.0);
+      }
+    }
+
+    @keyframes up {
+      from {
+        background-color: rgba($color: #0f0, $alpha: 1.0);
+      }
+
+      to {
+        background-color: rgba($color: #0f0, $alpha: 0.0);
+      }
+    }
+
+    .priceup {
+      animation-name: up;
+      animation-duration: 6s;
+    }
+
+    .pricedown {
+      animation-name: down;
+      animation-duration: 6s;
+    }
   }
 
   img {
     background: white;
     border-radius: 10px;
     height: 5vh;
+  }
+
+  .coinDetails {
+    display: flex;
+    flex-flow: row nowrap;
+
+    .mainChart {
+      width: 1000px;
+    }
+
+    .coinDetailStream {
+      // coin details 
+      // body {
+      //   background-color: black;
+      //   font-size: 17px;
+      //   color: white;
+      // }
+
+      font-size: 17px;
+      color: white;
+
+      width: 400px;
+
+      .panel {
+        background-color: rgb(50, 50, 50);
+      }
+
+      .panel-body {
+        padding-left: 10%;
+      }
+
+      .price-boxes {
+        margin-top: 10%;
+      }
+
+      a {
+        color: white;
+      }
+
+      .price {
+        font-size: 25px;
+        padding-left: 2%;
+      }
+
+      .price-display {
+        font-weight: bold;
+        text-align: center;
+      }
+
+      span {
+        color: orange;
+      }
+
+      .up {
+        color: green;
+      }
+
+      .down {
+        color: red;
+      }
+
+      .pct-up {
+        font-size: 12px;
+        color: green;
+        padding-left: 2%;
+        font-weight: bold;
+      }
+
+      .pct-down {
+        font-size: 12px;
+        color: red;
+        padding-left: 2%;
+        font-weight: bold;
+      }
+
+      .exchange {
+        color: #42f492;
+      }
+    }
   }
 }

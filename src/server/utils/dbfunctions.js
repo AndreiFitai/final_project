@@ -13,6 +13,17 @@ function getPrices() {
     .then(result => {
       priceData = result.data.filter(el => {
         return filteredCoinNames.indexOf(el.currency) !== -1;
+      }).map((el, index) => {
+        if (priceData.length === 0 || priceData[index].price === el.price) {
+          el.direction = 'same'
+          return el
+        } else if (priceData[index].price > el.price) {
+          el.direction = 'down'
+          return el
+        } else {
+          el.direction = 'up'
+          return el
+        }
       });
       Prices.findOneAndUpdate({}, {
         prices: result.data

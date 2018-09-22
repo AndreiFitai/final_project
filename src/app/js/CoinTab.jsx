@@ -1,4 +1,5 @@
 import React from "react";
+import CoinDeets from "./CoinDeets";
 import { Line } from "react-chartjs-2";
 import { presets } from "react-motion";
 import { Collapse } from "react-collapse";
@@ -131,8 +132,8 @@ const CoinTab = props => {
         <p>{props.fullName}</p>
         <br />
         <p>
-          price: <span />
-          {props.price} $
+          price:{" "}
+          <span className={`price${props.direction}`}>{props.price} $</span>
         </p>
         <br />
         <p>{props.supply}</p>
@@ -146,46 +147,63 @@ const CoinTab = props => {
           height={80}
         />
       </div>
-      <div className="coinDetails">
-        <Collapse
-          isOpened={props.graphState.isOpen}
-          springConfig={presets.noWobble}
-        >
-          <button
-            onClick={e => {
-              props.setGraphState(props.graphState.isOpen, "day", props.index);
-            }}
-          >
-            24 hours
-          </button>
-          <button
-            onClick={e => {
-              props.setGraphState(props.graphState.isOpen, "week", props.index);
-            }}
-          >
-            7 days
-          </button>
-          <button
-            onClick={e => {
-              props.setGraphState(
-                props.graphState.isOpen,
-                "month",
-                props.index
-              );
-            }}
-          >
-            Month
-          </button>
-          <button
-            onClick={e => {
-              props.setGraphState(props.graphState.isOpen, "year", props.index);
-            }}
-          >
-            Year
-          </button>
-          <Line data={data} width={600} height={240} />
-        </Collapse>
-      </div>
+      <Collapse
+        isOpened={props.graphState.isOpen}
+        springConfig={presets.noWobble}
+      >
+        <div className="coinDetails">
+          <div className="coinDetailStream">
+            <CoinDeets />
+          </div>
+          <div className="mainChart">
+            <button
+              onClick={e => {
+                props.setGraphState(
+                  props.graphState.isOpen,
+                  "day",
+                  props.index
+                );
+              }}
+            >
+              24 hours
+            </button>
+            <button
+              onClick={e => {
+                props.setGraphState(
+                  props.graphState.isOpen,
+                  "week",
+                  props.index
+                );
+              }}
+            >
+              7 days
+            </button>
+            <button
+              onClick={e => {
+                props.setGraphState(
+                  props.graphState.isOpen,
+                  "month",
+                  props.index
+                );
+              }}
+            >
+              Month
+            </button>
+            <button
+              onClick={e => {
+                props.setGraphState(
+                  props.graphState.isOpen,
+                  "year",
+                  props.index
+                );
+              }}
+            >
+              Year
+            </button>
+            <Line data={data} width={600} height={240} />
+          </div>
+        </div>
+      </Collapse>
     </div>
   );
 };

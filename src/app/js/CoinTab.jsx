@@ -30,7 +30,7 @@ const CoinTab = props => {
   };
 
   return (
-    <div className="coinContainer">
+    <div className="coinTainer">
       <img src={`https://www.cryptocompare.com${props.img}`} alt="" />
       <p>{props.name}</p>
       <br />

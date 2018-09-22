@@ -3,18 +3,19 @@ import CoinTab from "./CoinTab";
 import axios from "axios";
 
 const Home = props => {
+  console.log(props.prices);
   const coinTabs = props.data.map((el, index) => {
     const price = props.prices.filter(price => {
-      return el.name == price.currency;
+      return el.currency == price.currency;
     });
     const history = props.coinsHistory.filter(hist => {
-      return el.name == hist.currency;
+      return el.currency == hist.currency;
     });
     return (
       <CoinTab
-        name={el.name}
-        img={el.img}
-        fullName={el.fullName}
+        name={el.currency}
+        img={el.data.imgUrl}
+        fullName={el.data.fullname}
         price={price[0] ? price[0].price : "Loading..."}
         dayHistory={
           history[0] ? history[0].day : { timestamps: [], closes: [] }
@@ -28,8 +29,8 @@ const Home = props => {
         yearHistory={
           history[0] ? history[0].yearh : { timestamps: [], closes: [] }
         }
-        supply={el.supply}
-        totalVolume={el.totalVolume}
+        supply={el.data.supply}
+        totalVolume={el.data.totalVol}
         key={index}
       />
     );

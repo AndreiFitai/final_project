@@ -32,6 +32,7 @@ function getTop10() {
       `https://min-api.cryptocompare.com/data/top/totalvol?limit=10&tsym=USD`
     )
     .then(result => {
+      Top10.remove({}).then()
       let data = result.data.Data;
       filteredCoinNames = data.map(el => {
         return el.CoinInfo.Name

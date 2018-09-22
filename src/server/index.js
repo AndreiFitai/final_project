@@ -23,8 +23,7 @@ const apiRoutes = require("./routes/api");
 const appRoutes = require("./routes/app");
 
 mongoose.connect(
-  config.MONGODB_URI,
-  {
+  config.MONGODB_URI, {
     useNewUrlParser: true
   }
 );
@@ -45,10 +44,6 @@ server.use(express.static(path.join(__dirname, "public")));
 server.use("/api", apiRoutes);
 server.use(appRoutes);
 
-getTop10();
-getPrices();
-getHistoryData();
-getPriceData();
 io.on("connection", client => {
   client.on("subscribeToTimer", interval => {
     console.log("client is subscribing to timer with interval ", interval);
@@ -59,7 +54,7 @@ io.on("connection", client => {
   client.on("sendData", interval => {
     console.log("client is subscribing to sendData with interval ", interval);
     setInterval(() => {
-      client.emit("priceData", getPriceData());
+      client.emit("priceData", getPriceData())
     }, interval);
   });
 });
@@ -82,3 +77,7 @@ mongoose.connection.on("connected", () => {
     );
   });
 });
+
+getTop10();
+getPrices();
+getHistoryData();

@@ -5,13 +5,20 @@ const Prices = require("../models/Prices");
 const Top10 = require("../models/Top10");
 
 let priceData = [];
+let filteredCoinNames = [];
 
 function getPrices() {
   axios
     .get(`https://api.nomics.com/v1/prices?key=${config.NOMICS_API}`)
     .then(result => {
-      priceData = result.data;
-      Prices.findOneAndUpdate({}, { prices: result.data }, { upsert: true });
+      priceData = result.data.filter(el => {
+        return filteredCoinNames.indexOf(el.currency) !== -1;
+      });
+      Prices.findOneAndUpdate({}, {
+        prices: result.data
+      }, {
+        upsert: true
+      }).then()
     })
     .catch(error => {
       console.log(error);
@@ -26,20 +33,23 @@ function getTop10() {
     )
     .then(result => {
       let data = result.data.Data;
+      filteredCoinNames = data.map(el => {
+        return el.CoinInfo.Name
+      })
       data.forEach(coin => {
-        Top10.findOneAndUpdate(
-          { currency: coin.CoinInfo.Name },
-          {
-            currency: coin.CoinInfo.Name,
-            data: {
-              fullname: coin.CoinInfo.FullName,
-              imgUrl: coin.CoinInfo.ImageUrl,
-              supply: coin.ConversionInfo.Supply,
-              totalVol: coin.ConversionInfo.TotalVolume24H
-            }
-          },
-          { upsert: true }
-        ).then();
+        Top10.findOneAndUpdate({
+          currency: coin.CoinInfo.Name
+        }, {
+          currency: coin.CoinInfo.Name,
+          data: {
+            fullname: coin.CoinInfo.FullName,
+            imgUrl: coin.CoinInfo.ImageUrl,
+            supply: coin.ConversionInfo.Supply,
+            totalVol: coin.ConversionInfo.TotalVolume24H
+          }
+        }, {
+          upsert: true
+        }).then();
       });
     })
     .catch(error => {
@@ -64,29 +74,29 @@ function getHistoryData() {
             return result.currency == el;
           });
         }
-        CoinHistory.findOneAndUpdate(
-          { currency: el },
-          {
-            currency: el,
-            day: {
-              timestamps: history.day[0].timestamps,
-              closes: history.day[0].closes
-            },
-            week: {
-              timestamps: history.week[0].timestamps,
-              closes: history.week[0].closes
-            },
-            month: {
-              timestamps: history.month[0].timestamps,
-              closes: history.month[0].closes
-            },
-            year: {
-              timestamps: history.year[0].timestamps,
-              closes: history.year[0].closes
-            }
+        CoinHistory.findOneAndUpdate({
+          currency: el
+        }, {
+          currency: el,
+          day: {
+            timestamps: history.day[0] ? history.day[0].timestamps : [],
+            closes: history.day[0] ? history.day[0].closes : []
           },
-          { upsert: true }
-        ).then();
+          week: {
+            timestamps: history.week[0] ? history.week[0].timestamps : [],
+            closes: history.week[0] ? history.week[0].closes : []
+          },
+          month: {
+            timestamps: history.month[0] ? history.month[0].timestamps : [],
+            closes: history.month[0] ? history.month[0].closes : []
+          },
+          year: {
+            timestamps: history.year[0] ? history.year[0].timestamps : [],
+            closes: history.year[0] ? history.year[0].closes : []
+          }
+        }, {
+          upsert: true
+        }).then();
       });
     })
     .catch(error => {
@@ -96,9 +106,12 @@ function getHistoryData() {
 }
 
 function getPriceData() {
-  priceData;
+  return priceData;
 }
 
-console.log("get price data results", getPriceData());
-
-module.exports = { getTop10, getPrices, getHistoryData, getPriceData };
+module.exports = {
+  getTop10,
+  getPrices,
+  getHistoryData,
+  getPriceData
+};

@@ -10,7 +10,21 @@ const Top10 = require("../../models/Top10");
 let filteredCoinNames = [];
 
 //get current prices of all coins
-router.get("/prices", (req, res) => {
+// router.get("/prices", (req, res) => {
+//   Prices.find({})
+//     .then(result => {
+//       const filteredPrices = result[0].prices.filter(el => {
+//         return filteredCoinNames.indexOf(el.currency) !== -1;
+//       });
+//       res.send(filteredPrices);
+//     })
+//     .catch(error => {
+//       console.log(error);
+//       res.send("error");
+//     });
+// });
+
+router.get("/top10prices", (req, res) => {
   Prices.find({})
     .then(result => {
       const filteredPrices = result[0].prices.filter(el => {
@@ -26,7 +40,11 @@ router.get("/prices", (req, res) => {
 
 //gets historical data of coins from db -> data is split in days/week/month/year each containing all the coins
 router.get("/history", (req, res) => {
-  CoinHistory.find({ currency: { $in: [...filteredCoinNames] } }).then(data => {
+  CoinHistory.find({
+    currency: {
+      $in: [...filteredCoinNames]
+    }
+  }).then(data => {
     res.send(data);
   });
 });
@@ -34,6 +52,9 @@ router.get("/history", (req, res) => {
 //gets top10 coins with details and imgs
 router.get("/top10", (req, res) => {
   Top10.find({}).then(data => {
+    filteredCoinNames = data.map(el => {
+      return el.currency
+    })
     res.send(data);
   });
 });

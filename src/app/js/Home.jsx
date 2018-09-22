@@ -3,7 +3,6 @@ import CoinTab from "./CoinTab";
 import axios from "axios";
 
 const Home = props => {
-  console.log(props.prices);
   const coinTabs = props.data.map((el, index) => {
     const price = props.prices.filter(price => {
       return el.currency == price.currency;

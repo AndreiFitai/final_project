@@ -7,8 +7,11 @@ function subscribeToTimer(cb) {
 }
 
 function getData(cb) {
-  socket.on("priceData", priceData => cb(null, priceData));
+  socket.on("priceData", getPriceData => cb(null, getPriceData));
   socket.emit("sendData", 5000);
 }
 
-export { subscribeToTimer, getData };
+export {
+  subscribeToTimer,
+  getData
+};

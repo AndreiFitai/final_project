@@ -43,7 +43,7 @@ class Application extends React.Component {
     axios.get(`/api/coin/top10`).then(result => {
       this.setState({ top10Coins: result.data });
     });
-    axios.get(`/api/coin/prices`).then(result => {
+    axios.get(`/api/coin/top10prices`).then(result => {
       this.setState({ priceData: result.data });
     });
     axios.get(`/api/coin/history`).then(result => {

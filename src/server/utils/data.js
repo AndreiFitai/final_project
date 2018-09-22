@@ -1,15 +1,16 @@
 const axios = require("axios");
 const config = require("../config");
 const CronJob = require("cron").CronJob;
-const { getTop10, getPrices, getHistoryData } = require("./dbfunctions");
+const {
+  getTop10,
+  getPrices,
+  getHistoryData
+} = require("./dbfunctions");
 
-getTop10();
-getPrices();
-getHistoryData();
 
 new CronJob(
   "*/5 * * * * *",
-  function() {
+  function () {
     getPrices();
   },
   null,
@@ -19,7 +20,7 @@ new CronJob(
 
 new CronJob(
   "* * */12 * * *",
-  function() {
+  function () {
     getTop10();
   },
   null,
@@ -29,7 +30,7 @@ new CronJob(
 
 new CronJob(
   "* * */1 * * *",
-  function() {
+  function () {
     getHistoryData();
   },
   null,

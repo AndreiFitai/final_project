@@ -111,8 +111,6 @@ class Application extends React.Component {
   }
 
   _setGraphState(isOpen, timeframe, index) {
-    console.log("setgraphstate called", isOpen, timeframe, index);
-
     let data = [];
     if (this.state.graphState.length == 0) {
       for (let x = 0; x < 10; x++) {
@@ -123,7 +121,6 @@ class Application extends React.Component {
         data.push(temp);
       }
       this.setState({ graphState: data });
-      console.log(data);
     } else {
       data = this.state.graphState;
       data[index].isOpen = isOpen;

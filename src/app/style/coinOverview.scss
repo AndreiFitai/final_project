@@ -1,13 +1,15 @@
 .coinTainer {
   width: 80vw;
-  background: lightgrey;
+  background: lightgray;
   margin: 10px 0;
+  border-radius: 10px;
 
   .coinHeader {
     height: 7vh;
     width: 80vw;
     background: lightgrey;
     margin: 10px 0;
+    border-radius: 10px;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
@@ -71,12 +73,12 @@
       // }
 
       font-size: 17px;
-      color: white;
+      color: darkgray;
 
       width: 400px;
 
       .panel {
-        background-color: rgb(50, 50, 50);
+        // background-color: rgb(50, 50, 50);
       }
 
       .panel-body {

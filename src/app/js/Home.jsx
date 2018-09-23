@@ -43,8 +43,6 @@ const Home = props => {
     <div className="container">
       <h1>Hello, {props.user ? props.user.email : "Stranger"}!</h1>
       {props.data ? coinTabs : <div />}
-      <script src="./utils/ccc-streamer-utilities.js" />
-      <script src="./utils/stream.js" />
     </div>
   );
 };

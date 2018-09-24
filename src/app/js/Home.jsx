@@ -16,6 +16,7 @@ const Home = props => {
         img={el.data.imgUrl}
         fullName={el.data.fullname}
         price={price[0] ? price[0].price : "Loading..."}
+        direction={price[0] ? price[0].direction : "same"}
         dayHistory={
           history[0] ? history[0].day : { timestamps: [], closes: [] }
         }
@@ -26,10 +27,13 @@ const Home = props => {
           history[0] ? history[0].month : { timestamps: [], closes: [] }
         }
         yearHistory={
-          history[0] ? history[0].yearh : { timestamps: [], closes: [] }
+          history[0] ? history[0].year : { timestamps: [], closes: [] }
         }
         supply={el.data.supply}
         totalVolume={el.data.totalVol}
+        graphState={props.graphState[index]}
+        setGraphState={props.setGraphState}
+        index={index}
         key={index}
       />
     );

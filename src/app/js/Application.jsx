@@ -19,7 +19,8 @@ class Application extends React.Component {
       top10Coins: [],
       timestamp: "no timestamp yet",
       priceData: [],
-      coinsHistory: []
+      coinsHistory: [],
+      graphState: []
     };
 
     subscribeToTimer((err, timestamp) => {
@@ -36,10 +37,12 @@ class Application extends React.Component {
 
     this._setUser = this._setUser.bind(this);
     this._resetUser = this._resetUser.bind(this);
+    this._setGraphState = this._setGraphState.bind(this);
   }
 
   componentDidMount() {
     this._setUser();
+    this._setGraphState();
     axios.get(`/api/coin/top10`).then(result => {
       this.setState({ top10Coins: result.data });
     });
@@ -66,6 +69,8 @@ class Application extends React.Component {
                   data={this.state.top10Coins}
                   prices={this.state.priceData}
                   coinsHistory={this.state.coinsHistory}
+                  graphState={this.state.graphState}
+                  setGraphState={this._setGraphState}
                 />
               )}
             />
@@ -102,6 +107,25 @@ class Application extends React.Component {
       this.setState({ user: decoded });
     } else {
       return null;
+    }
+  }
+
+  _setGraphState(isOpen, timeframe, index) {
+    let data = [];
+    if (this.state.graphState.length == 0) {
+      for (let x = 0; x < 10; x++) {
+        let temp = {};
+        temp.index = x;
+        temp.timeframe = "week";
+        temp.isOpen = false;
+        data.push(temp);
+      }
+      this.setState({ graphState: data });
+    } else {
+      data = this.state.graphState;
+      data[index].isOpen = isOpen;
+      data[index].timeframe = timeframe;
+      this.setState({ graphState: data });
     }
   }
 }

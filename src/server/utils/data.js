@@ -9,7 +9,7 @@ const {
 
 
 new CronJob(
-  "*/5 * * * * *",
+  "*/10 * * * * *",
   function () {
     getPrices();
   },

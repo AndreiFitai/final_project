@@ -1,13 +1,14 @@
 .coinTainer {
-  width: 80vw;
-  background: lightgray;
+  width: 81vw;
+  background: white;
   margin: 10px 0;
+  border: 1px solid purple;
   border-radius: 10px;
 
   .coinHeader {
     height: 7vh;
-    width: 80vw;
-    background: lightgrey;
+    width: vw;
+    background: white;
     margin: 10px 0;
     border-radius: 10px;
     display: flex;

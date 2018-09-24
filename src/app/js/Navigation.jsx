@@ -19,9 +19,6 @@ const Navigation = props => {
           )}
         </div>
         <div>
-          <p>{props.time}</p>
-        </div>
-        <div>
           {props.user ? (
             <Link className="link nav-link" to="/auth/logout">
               Logout

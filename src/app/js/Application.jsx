@@ -17,17 +17,10 @@ class Application extends React.Component {
     this.state = {
       user: this._setUser(true),
       top10Coins: [],
-      timestamp: "no timestamp yet",
       priceData: [],
       coinsHistory: [],
       graphState: []
     };
-
-    subscribeToTimer((err, timestamp) => {
-      this.setState({
-        timestamp
-      });
-    });
 
     getData((err, data) => {
       this.setState({

@@ -1,0 +1,15 @@
+.userHeader {
+  height: 20vh;
+  display: flex;
+  flex-flow: row nowrap;
+  margin: 20px 10vw;
+
+  .userPic {
+    img {
+      height: 80px;
+      width: 80px;
+      border: 2px solid purple;
+      border-radius: 10px;
+    }
+  }
+}

@@ -45,12 +45,6 @@ server.use("/api", apiRoutes);
 server.use(appRoutes);
 
 io.on("connection", client => {
-  client.on("subscribeToTimer", interval => {
-    console.log("client is subscribing to timer with interval ", interval);
-    setInterval(() => {
-      client.emit("timer", new Date());
-    }, interval);
-  });
   client.on("sendData", interval => {
     console.log("client is subscribing to sendData with interval ", interval);
     setInterval(() => {

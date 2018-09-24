@@ -3,6 +3,7 @@ import CoinDeets from "./CoinDeets";
 import { Line } from "react-chartjs-2";
 import { presets } from "react-motion";
 import { Collapse } from "react-collapse";
+import millify from "millify";
 
 const CoinTab = props => {
   let selectedTimeFrame = {};
@@ -28,14 +29,24 @@ const CoinTab = props => {
     };
   }
 
+  let mainColor;
+  if (
+    selectedTimeFrame.data[0] <
+    selectedTimeFrame.data[selectedTimeFrame.data.length - 1]
+  ) {
+    mainColor = "20,10,220";
+  } else {
+    mainColor = "220,10,75";
+  }
+
   const data = {
     labels: selectedTimeFrame.labels,
     datasets: [
       {
         fill: true,
         lineTension: 0,
-        backgroundColor: "rgba(75,192,192,0.4)",
-        borderColor: "rgba(75,192,192,1)",
+        backgroundColor: `rgba(${mainColor},0.4)`,
+        borderColor: `rgba(${mainColor},1)`,
         borderCapStyle: "butt",
         borderDash: [],
         borderDashOffset: 0.0,
@@ -54,24 +65,58 @@ const CoinTab = props => {
     ]
   };
 
+  const mainChartStyle = {
+    responsive: true,
+    animation: {
+      duration: 300,
+      easing: "easeInCirc"
+    },
+    title: {
+      display: true,
+      text: props.graphState.timeframe
+    },
+    legend: {
+      display: false
+    },
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: false
+          }
+        }
+      ]
+    }
+  };
+
+  let sparklineColor;
+  if (
+    props.dayHistory.closes[0] <
+    props.dayHistory.closes[props.dayHistory.closes.length - 1]
+  ) {
+    sparklineColor = "20,10,220";
+  } else {
+    sparklineColor = "220,10,75";
+  }
+
   const sparklineData = {
     labels: props.dayHistory.timestamps,
     datasets: [
       {
         fill: true,
         lineTension: 0,
-        backgroundColor: "rgba(75,192,192,0.4)",
-        borderColor: "rgba(75,192,192,1)",
+        backgroundColor: `rgba(${sparklineColor},0.4)`,
+        borderColor: `rgba(${sparklineColor},1)`,
         borderCapStyle: "butt",
         borderDash: [],
         borderDashOffset: 0.0,
         borderJoinStyle: "miter",
-        pointBorderColor: "rgba(75,192,192,1)",
+        pointBorderColor: `rgba(${sparklineColor},1)`,
         pointBackgroundColor: "#fff",
         pointBorderWidth: 1,
         pointHoverRadius: 2,
-        pointHoverBackgroundColor: "rgba(75,192,192,1)",
-        pointHoverBorderColor: "rgba(220,220,220,1)",
+        pointHoverBackgroundColor: `rgba(${sparklineColor},1)`,
+        pointHoverBorderColor: `rgba(220,220,220,1)`,
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
@@ -126,26 +171,42 @@ const CoinTab = props => {
           )
         }
       >
-        <img src={`https://www.cryptocompare.com${props.img}`} alt="" />
-        <p>{props.name}</p>
-        <br />
-        <p>{props.fullName}</p>
-        <br />
-        <p>
-          price:{" "}
-          <span className={`price${props.direction}`}>{props.price} $</span>
-        </p>
-        <br />
-        <p>{props.supply}</p>
-        <br />
-        <p>{props.totalVolume}</p>
-        <br />
-        <Line
-          data={sparklineData}
-          options={sparklineStyle}
-          width={200}
-          height={80}
-        />
+        <div className="iconAndName">
+          <div className="icon">
+            <img src={`https://www.cryptocompare.com${props.img}`} alt="" />
+          </div>
+          <div className="shortName">
+            <p>{props.name}</p>
+          </div>
+          <div className="fullName">
+            <p>{props.fullName}</p>
+          </div>
+        </div>
+        <div className="priceDiv">
+          <p>Price: </p>
+          <div className="price">
+            <span className={`price${props.direction}`}>{props.price} $</span>
+          </div>
+        </div>
+        <div className="supplyDiv">
+          <p>Coin Supply</p>
+          <div className="supply">{props.supply}</div>
+        </div>
+        <div className="volumeDiv">
+          <p>Transaction Volume Last 24H</p>
+          <div className="supply">
+            {millify(props.totalVolume * props.price)} $
+          </div>
+        </div>
+        <div className="sparklineDiv">
+          <p>Last 24h</p>
+          <Line
+            data={sparklineData}
+            options={sparklineStyle}
+            width={200}
+            height={80}
+          />
+        </div>
       </div>
       <Collapse
         isOpened={props.graphState.isOpen}
@@ -157,6 +218,7 @@ const CoinTab = props => {
           </div>
           <div className="mainChart">
             <button
+              className="btn"
               onClick={e => {
                 props.setGraphState(
                   props.graphState.isOpen,
@@ -168,6 +230,7 @@ const CoinTab = props => {
               24 hours
             </button>
             <button
+              className="btn"
               onClick={e => {
                 props.setGraphState(
                   props.graphState.isOpen,
@@ -179,6 +242,7 @@ const CoinTab = props => {
               7 days
             </button>
             <button
+              className="btn"
               onClick={e => {
                 props.setGraphState(
                   props.graphState.isOpen,
@@ -190,6 +254,7 @@ const CoinTab = props => {
               Month
             </button>
             <button
+              className="btn"
               onClick={e => {
                 props.setGraphState(
                   props.graphState.isOpen,
@@ -200,7 +265,12 @@ const CoinTab = props => {
             >
               Year
             </button>
-            <Line data={data} width={600} height={240} />
+            <Line
+              data={data}
+              options={mainChartStyle}
+              width={600}
+              height={240}
+            />
           </div>
         </div>
       </Collapse>

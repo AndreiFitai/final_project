@@ -215,16 +215,13 @@ const CoinTab = props => {
           />
         </div>
         <div className="trackButton">
-          <Link
-            className="link"
-            to={{
-              pathname: `/profile/addcoin/${props.name}`,
-              state: {
-                user: props.user.email
-              }
-            }}
-          >
-            <button className="btn btnTrackCoin">Track Coin</button>
+          <Link className="link" to="/profile/addcoin">
+            <button
+              onClick={e => props.setSelectedCoin(props.name)}
+              className="btn btnTrackCoin"
+            >
+              Track Coin
+            </button>
           </Link>
         </div>
       </div>

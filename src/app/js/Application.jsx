@@ -17,6 +17,7 @@ class Application extends React.Component {
     this.state = {
       user: this._setUser(true),
       trackedCoins: [],
+      selectedCoin: null,
       top10Coins: [],
       priceData: [],
       coinsHistory: [],
@@ -32,6 +33,7 @@ class Application extends React.Component {
     this._setUser = this._setUser.bind(this);
     this._resetUser = this._resetUser.bind(this);
     this._setTrackedCoins = this._setTrackedCoins.bind(this);
+    this._setSelectedCoin = this._setSelectedCoin.bind(this);
     this._setGraphState = this._setGraphState.bind(this);
   }
 
@@ -66,6 +68,7 @@ class Application extends React.Component {
                   coinsHistory={this.state.coinsHistory}
                   graphState={this.state.graphState}
                   setGraphState={this._setGraphState}
+                  setSelectedCoin={this._setSelectedCoin}
                 />
               )}
             />
@@ -76,6 +79,7 @@ class Application extends React.Component {
                   user={this.state.user}
                   trackedCoins={this.state.trackedCoins}
                   setTrackedCoins={this._setTrackedCoins}
+                  selectedCoin={this.state.selectedCoin}
                 />
               )}
             />
@@ -114,6 +118,12 @@ class Application extends React.Component {
     } else {
       return null;
     }
+  }
+
+  _setSelectedCoin(coin) {
+    this.setState({
+      selectedCoin: coin
+    });
   }
 
   _setTrackedCoins() {

@@ -34,6 +34,7 @@ const Home = props => {
         totalVolume={el.data.totalVol}
         graphState={props.graphState[index]}
         setGraphState={props.setGraphState}
+        setSelectedCoin={props.setSelectedCoin}
         index={index}
         key={index}
       />

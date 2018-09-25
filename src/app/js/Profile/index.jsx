@@ -21,7 +21,17 @@ class Profile extends Component {
             />
           )}
         />
-        <Route exact path="/profile/addcoin/:coin" component={AddCoin} />
+        <Route
+          exact
+          path="/profile/addcoin"
+          render={() => (
+            <AddCoin
+              user={this.props.user}
+              selectedCoin={this.props.selectedCoin}
+              setTrackedCoins={this.props.setTrackedCoins}
+            />
+          )}
+        />
         <Route component={NotFound} />
       </Switch>
     );

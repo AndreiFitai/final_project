@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
+import CoinCard from "./CoinCard";
+import api from "../utils/api";
 
 class ProfileView extends Component {
-  componentDidMount() {
-    this.props.setTrackedCoins;
-  }
   render() {
+    let coinCards = this.props.trackedCoins.map((el, index) => {
+      return <CoinCard name={el} />;
+    });
+
     return (
       <div>
         <div className="userHeader">
@@ -19,11 +22,7 @@ class ProfileView extends Component {
           <br />
           {this.props.user.email}
         </div>
-        <div className="cardContainer">
-          {" "}
-          CARDSSS
-          {this.props.trackedCoins}
-        </div>
+        <div className="cardContainer">{coinCards}</div>
       </div>
     );
   }

@@ -13,3 +13,20 @@
     }
   }
 }
+
+.cardContainer {
+  border: 1px solid red;
+  width: 85vw;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+
+  .coinCard {
+    width: 25vw;
+    height: 30vh;
+    border: 2px solid purple;
+    border-radius: 10px;
+    background: lightblue;
+    margin: 20px;
+  }
+}

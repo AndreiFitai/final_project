@@ -10,6 +10,9 @@ const Home = props => {
     const history = props.coinsHistory.filter(hist => {
       return el.currency == hist.currency;
     });
+    const dashboard = props.coinDashboards.filter(dash => {
+      return el.currency == dash.currency;
+    });
     return (
       <CoinTab
         user={props.user}
@@ -33,6 +36,7 @@ const Home = props => {
         supply={el.data.supply}
         totalVolume={el.data.totalVol}
         graphState={props.graphState[index]}
+        coinDashboard={dashboard[0]}
         setGraphState={props.setGraphState}
         setSelectedCoin={props.setSelectedCoin}
         index={index}

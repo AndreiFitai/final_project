@@ -43,26 +43,26 @@
     }
 
     .pricesame {
-      background-color: rgba($color: #000000, $alpha: 0.0)
+      background-color: rgba($color: #000000, $alpha: 0);
     }
 
     @keyframes down {
       from {
-        background-color: rgba($color: #f00, $alpha: 1.0);
+        background-color: rgba($color: #f00, $alpha: 1);
       }
 
       to {
-        background-color: rgba($color: #f00, $alpha: 0.0);
+        background-color: rgba($color: #f00, $alpha: 0);
       }
     }
 
     @keyframes up {
       from {
-        background-color: rgba($color: #0f0, $alpha: 1.0);
+        background-color: rgba($color: #0f0, $alpha: 1);
       }
 
       to {
-        background-color: rgba($color: #0f0, $alpha: 0.0);
+        background-color: rgba($color: #0f0, $alpha: 0);
       }
     }
 
@@ -112,10 +112,26 @@
     flex-flow: row nowrap;
 
     .mainChart {
+      padding-top: 30px;
       width: 1000px;
     }
 
+    .coinDeets {
+      width: 25vw;
+      margin: 20px;
+      border: 2px solid purple;
+      border-radius: 10px;
 
-
+      .coinDeetsTitle {
+        margin: 5px auto;
+        width: 90%;
+      }
+      .coinDeetsTable {
+        margin: 5px;
+      }
+      .grey-row {
+        background: lightgray;
+      }
+    }
   }
 }

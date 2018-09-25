@@ -14,7 +14,8 @@ const {
   getTop10,
   getPrices,
   getHistoryData,
-  getPriceData
+  getPriceData,
+  getDashboards
 } = require("./utils/dbfunctions");
 
 const config = require("./config");
@@ -23,7 +24,8 @@ const apiRoutes = require("./routes/api");
 const appRoutes = require("./routes/app");
 
 mongoose.connect(
-  config.MONGODB_URI, {
+  config.MONGODB_URI,
+  {
     useNewUrlParser: true
   }
 );
@@ -48,7 +50,7 @@ io.on("connection", client => {
   client.on("sendData", interval => {
     console.log("client is subscribing to sendData with interval ", interval);
     setInterval(() => {
-      client.emit("priceData", getPriceData())
+      client.emit("priceData", getPriceData());
     }, interval);
   });
 });
@@ -75,3 +77,4 @@ mongoose.connection.on("connected", () => {
 getTop10();
 getPrices();
 getHistoryData();
+getDashboards();

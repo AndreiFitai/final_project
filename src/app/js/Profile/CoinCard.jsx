@@ -5,7 +5,7 @@ const CoinDeets = props => {
     <div className="coinCard">
       <div>Testing</div>
       <div>to see</div>
-      <div>if this works</div>
+      <div />
       <div>{props.name}</div>
     </div>
   );

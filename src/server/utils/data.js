@@ -4,13 +4,13 @@ const CronJob = require("cron").CronJob;
 const {
   getTop10,
   getPrices,
-  getHistoryData
+  getHistoryData,
+  getDashboards
 } = require("./dbfunctions");
-
 
 new CronJob(
   "*/10 * * * * *",
-  function () {
+  function() {
     getPrices();
   },
   null,
@@ -20,7 +20,7 @@ new CronJob(
 
 new CronJob(
   "* * */12 * * *",
-  function () {
+  function() {
     getTop10();
   },
   null,
@@ -29,8 +29,18 @@ new CronJob(
 );
 
 new CronJob(
+  "* * */12 * * *",
+  function() {
+    getDashboards();
+  },
+  null,
+  true,
+  "Europe/Berlin"
+);
+
+new CronJob(
   "* * */1 * * *",
-  function () {
+  function() {
     getHistoryData();
   },
   null,

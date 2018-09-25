@@ -7,7 +7,7 @@ const Navigation = props => {
       <div className="container nav-content">
         <div>
           <Link className="link nav-link" to="/">
-            Home
+            CoinBuddyBot
           </Link>
           {props.user && (
             <span>

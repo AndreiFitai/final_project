@@ -16,6 +16,7 @@ class Profile extends Component {
           render={() => (
             <ProfileView
               user={this.props.user}
+              priceData={this.props.priceData}
               trackedCoins={this.props.trackedCoins}
               setTrackedCoins={this.props.setTrackedCoins}
             />

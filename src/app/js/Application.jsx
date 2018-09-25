@@ -21,6 +21,7 @@ class Application extends React.Component {
       top10Coins: [],
       priceData: [],
       coinsHistory: [],
+      coinDashboards: [],
       graphState: []
     };
 
@@ -49,6 +50,10 @@ class Application extends React.Component {
     axios.get(`/api/coin/history`).then(result => {
       this.setState({ coinsHistory: result.data });
     });
+    axios.get(`/api/coin/dashboards`).then(result => {
+      console.log("dashboards loaded");
+      this.setState({ coinDashboards: result.data });
+    });
   }
 
   render() {
@@ -67,6 +72,7 @@ class Application extends React.Component {
                   prices={this.state.priceData}
                   coinsHistory={this.state.coinsHistory}
                   graphState={this.state.graphState}
+                  coinDashboards={this.state.coinDashboards}
                   setGraphState={this._setGraphState}
                   setSelectedCoin={this._setSelectedCoin}
                 />
@@ -77,6 +83,7 @@ class Application extends React.Component {
               render={() => (
                 <Profile
                   user={this.state.user}
+                  priceData={this.state.priceData}
                   trackedCoins={this.state.trackedCoins}
                   setTrackedCoins={this._setTrackedCoins}
                   selectedCoin={this.state.selectedCoin}
@@ -109,12 +116,7 @@ class Application extends React.Component {
       const decoded = jwtDecode(token);
       delete decoded.iat;
       if (init) return decoded;
-      api
-        .get(`/api/coin/trackedCoins/${this.state.user.email}`)
-        .then(result => {
-          this.setState({ trackedCoins: result, user: decoded });
-        });
-      // this.setState({ user: decoded });
+      this.setState({ user: decoded });
     } else {
       return null;
     }

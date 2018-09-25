@@ -1,5 +1,6 @@
 import React from "react";
 import millify from "millify";
+import moment from "moment";
 import CoinDeets from "./CoinDeets";
 import { Line } from "react-chartjs-2";
 import { presets } from "react-motion";
@@ -84,6 +85,15 @@ const CoinTab = props => {
         {
           ticks: {
             beginAtZero: false
+          }
+        }
+      ],
+      xAxes: [
+        {
+          type: "time",
+          ticks: {
+            autoSkip: true,
+            maxTicksLimit: 10
           }
         }
       ]
@@ -230,8 +240,8 @@ const CoinTab = props => {
         springConfig={presets.noWobble}
       >
         <div className="coinDetails">
-          <div className="coinDetailStream">
-            <CoinDeets />
+          <div className="coinDashboard">
+            <CoinDeets dash={props.coinDashboard} />
           </div>
           <div className="mainChart">
             <button

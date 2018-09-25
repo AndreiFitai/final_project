@@ -1,5 +1,5 @@
 .coinTainer {
-  width: 82vw;
+  width: 81vw;
   background: white;
   margin: 10px 0;
   border: 2px solid purple;
@@ -14,7 +14,19 @@
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
+
+    .btnTrackCoin {
+      height: 7vh;
+      box-sizing: 0;
+      border-radius: 10px;
+    }
+
+    .btnDetails {
+      height: 7vh;
+      box-sizing: 0;
+      border-radius: 10px;
+    }
 
     .iconAndName {
       width: 15vw;
@@ -71,6 +83,30 @@
     height: 5vh;
   }
 
+  .btn {
+    background-color: white;
+    border: 1px solid purple;
+    border-radius: 5px;
+    color: black;
+    padding: 5px 10px;
+    margin: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+  }
+
+  .btn:focus {
+    outline: 0;
+  }
+
+  .btn:hover {
+    background-color: purple;
+    color: white;
+  }
+
   .coinDetails {
     display: flex;
     flex-flow: row nowrap;
@@ -79,97 +115,7 @@
       width: 1000px;
     }
 
-    .btn {
-      background-color: white;
-      border: 1px solid purple;
-      color: black;
-      padding: 5px 10px;
-      margin: 5px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      -webkit-transition-duration: 0.4s;
-      transition-duration: 0.4s;
-    }
 
-    .btn:focus {
-      outline: 0;
-    }
 
-    .btn:hover {
-      background-color: purple;
-      color: white;
-    }
-
-    .coinDetailStream {
-      // coin details 
-      // body {
-      //   background-color: black;
-      //   font-size: 17px;
-      //   color: white;
-      // }
-
-      font-size: 17px;
-      color: darkgray;
-
-      width: 400px;
-
-      .panel {
-        // background-color: rgb(50, 50, 50);
-      }
-
-      .panel-body {
-        padding-left: 10%;
-      }
-
-      .price-boxes {
-        margin-top: 10%;
-      }
-
-      a {
-        color: white;
-      }
-
-      .price {
-        font-size: 25px;
-        padding-left: 2%;
-      }
-
-      .price-display {
-        font-weight: bold;
-        text-align: center;
-      }
-
-      span {
-        color: orange;
-      }
-
-      .up {
-        color: green;
-      }
-
-      .down {
-        color: red;
-      }
-
-      .pct-up {
-        font-size: 12px;
-        color: green;
-        padding-left: 2%;
-        font-weight: bold;
-      }
-
-      .pct-down {
-        font-size: 12px;
-        color: red;
-        padding-left: 2%;
-        font-weight: bold;
-      }
-
-      .exchange {
-        color: #42f492;
-      }
-    }
   }
 }

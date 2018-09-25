@@ -1,21 +1,29 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import ProfileView from "./ProfileView";
+import AddCoin from "./AddCoin";
+import NotFound from "../NotFound";
 
 class Profile extends Component {
   render() {
     if (!this.props.user) return <Redirect to="/auth/sign-in" />; // this is actually the protection
-
     return (
-      <div className="userHeader">
-        <div className="userPic">
-          <img src={this.props.user.profilePicture} alt="" />
-        </div>
-
-        <br />
-        {this.props.user._id}
-        <br />
-        {this.props.user.email}
-      </div>
+      <Switch>
+        <Route
+          exact
+          path="/profile"
+          render={() => (
+            <ProfileView
+              user={this.props.user}
+              trackedCoins={this.props.trackedCoins}
+              setTrackedCoins={this.props.setTrackedCoins}
+            />
+          )}
+        />
+        <Route exact path="/profile/addcoin/:coin" component={AddCoin} />
+        <Route component={NotFound} />
+      </Switch>
     );
   }
 }

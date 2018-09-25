@@ -6,6 +6,7 @@ const moment = require("moment");
 const CoinHistory = require("../../models/CoinHistory");
 const Prices = require("../../models/Prices");
 const Top10 = require("../../models/Top10");
+const User = require('../../models/User')
 
 let filteredCoinNames = [];
 
@@ -58,5 +59,31 @@ router.get("/top10", (req, res) => {
     res.send(data);
   });
 });
+
+router.post("/addcoin", (req, res) => {
+  const {
+    email,
+    coin
+  } = req.body
+  User.findOneAndUpdate({
+    email
+  }, {
+    $push: {
+      trackedCoins: coin
+    }
+  }).then(result => {})
+  res.send('ok')
+})
+
+
+router.get("/trackedCoins/:email", (req, res) => {
+  const email = req.params.email
+  User.findOne({
+    email
+  }).then(result => {
+    res.send(result.trackedCoins)
+  })
+})
+
 
 module.exports = router;

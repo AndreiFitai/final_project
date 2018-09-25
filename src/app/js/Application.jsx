@@ -16,6 +16,7 @@ class Application extends React.Component {
 
     this.state = {
       user: this._setUser(true),
+      trackedCoins: [],
       top10Coins: [],
       priceData: [],
       coinsHistory: [],
@@ -30,6 +31,7 @@ class Application extends React.Component {
 
     this._setUser = this._setUser.bind(this);
     this._resetUser = this._resetUser.bind(this);
+    this._setTrackedCoins = this._setTrackedCoins.bind(this);
     this._setGraphState = this._setGraphState.bind(this);
   }
 
@@ -51,7 +53,7 @@ class Application extends React.Component {
     return (
       <BrowserRouter>
         <div>
-          <Navigation user={this.state.user} time={this.state.timestamp} />
+          <Navigation user={this.state.user} />
           <Switch>
             <Route
               exact
@@ -68,9 +70,14 @@ class Application extends React.Component {
               )}
             />
             <Route
-              exact
               path="/profile"
-              render={() => <Profile user={this.state.user} />}
+              render={() => (
+                <Profile
+                  user={this.state.user}
+                  trackedCoins={this.state.trackedCoins}
+                  setTrackedCoins={this._setTrackedCoins}
+                />
+              )}
             />
             <Route
               path="/auth"
@@ -87,7 +94,8 @@ class Application extends React.Component {
 
   _resetUser() {
     this.setState({
-      user: null
+      user: null,
+      trackedCoins: []
     });
   }
 
@@ -97,10 +105,21 @@ class Application extends React.Component {
       const decoded = jwtDecode(token);
       delete decoded.iat;
       if (init) return decoded;
-      this.setState({ user: decoded });
+      api
+        .get(`/api/coin/trackedCoins/${this.state.user.email}`)
+        .then(result => {
+          this.setState({ trackedCoins: result, user: decoded });
+        });
+      // this.setState({ user: decoded });
     } else {
       return null;
     }
+  }
+
+  _setTrackedCoins() {
+    api.get(`/api/coin/trackedCoins/${this.state.user.email}`).then(result => {
+      this.setState({ trackedCoins: result });
+    });
   }
 
   _setGraphState(isOpen, timeframe, index) {

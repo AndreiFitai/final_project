@@ -1,9 +1,10 @@
 import React from "react";
+import millify from "millify";
 import CoinDeets from "./CoinDeets";
 import { Line } from "react-chartjs-2";
 import { presets } from "react-motion";
 import { Collapse } from "react-collapse";
-import millify from "millify";
+import { Link } from "react-router-dom";
 
 const CoinTab = props => {
   let selectedTimeFrame = {};
@@ -161,16 +162,22 @@ const CoinTab = props => {
 
   return (
     <div className="coinTainer">
-      <div
-        className="coinHeader"
-        onClick={e =>
-          props.setGraphState(
-            !props.graphState.isOpen,
-            props.graphState.timeframe,
-            props.index
-          )
-        }
-      >
+      <div className="coinHeader">
+        <div className="extraDetails">
+          <button
+            className="btn btnDetails"
+            onClick={e =>
+              props.setGraphState(
+                !props.graphState.isOpen,
+                props.graphState.timeframe,
+                props.index
+              )
+            }
+          >
+            {" "}
+            Details{" "}
+          </button>
+        </div>
         <div className="iconAndName">
           <div className="icon">
             <img src={`https://www.cryptocompare.com${props.img}`} alt="" />
@@ -206,6 +213,19 @@ const CoinTab = props => {
             width={200}
             height={80}
           />
+        </div>
+        <div className="trackButton">
+          <Link
+            className="link"
+            to={{
+              pathname: `/profile/addcoin/${props.name}`,
+              state: {
+                user: props.user.email
+              }
+            }}
+          >
+            <button className="btn btnTrackCoin">Track Coin</button>
+          </Link>
         </div>
       </div>
       <Collapse

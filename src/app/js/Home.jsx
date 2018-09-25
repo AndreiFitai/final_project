@@ -12,6 +12,7 @@ const Home = props => {
     });
     return (
       <CoinTab
+        user={props.user}
         name={el.currency}
         img={el.data.imgUrl}
         fullName={el.data.fullname}

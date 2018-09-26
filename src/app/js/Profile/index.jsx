@@ -19,6 +19,7 @@ class Profile extends Component {
               priceData={this.props.priceData}
               trackedCoins={this.props.trackedCoins}
               setTrackedCoins={this.props.setTrackedCoins}
+              handleTrackChange={this.props.handleTrackChange}
             />
           )}
         />

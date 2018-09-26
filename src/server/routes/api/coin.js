@@ -7,6 +7,7 @@ const CoinHistory = require("../../models/CoinHistory");
 const Prices = require("../../models/Prices");
 const Top10 = require("../../models/Top10");
 const User = require("../../models/User");
+const TrackedCoins = require("../../models/TrackedCoins");
 const CoinDashboard = require("../../models/CoinDashboard");
 
 let filteredCoinNames = [];
@@ -73,26 +74,38 @@ router.get("/dashboards", (req, res) => {
 router.post("/addcoin", (req, res) => {
   const {
     email,
-    coin
+    coin,
+    price_current,
+    target_price1,
+    target_price2,
+    telegram_track,
+    slack_track
   } = req.body;
-  User.findOneAndUpdate({
-    email
-  }, {
-    $push: {
-      trackedCoins: coin
-    }
-  }).then(result => {});
+  TrackedCoins.findOneAndUpdate(
+    {
+      email,
+      coin
+    },
+    {
+      email,
+      coin,
+      price_current,
+      target_price1,
+      target_price2,
+      telegram_track,
+      slack_track
+    },
+    { upsert: true }
+  ).then(result => {});
   res.send("ok");
 });
 
 router.get("/trackedCoins/:email", (req, res) => {
-  console.log('callled tracked coins !');
-
   const email = req.params.email;
-  User.findOne({
+  TrackedCoins.find({
     email
   }).then(result => {
-    res.send(result.trackedCoins);
+    res.send(result);
   });
 });
 

@@ -8,9 +8,16 @@ class ProfileView extends Component {
   render() {
     let coinCards = this.props.trackedCoins.map((el, index) => {
       let coinPrice = this.props.priceData.filter(price => {
-        return price.currency == el;
+        return price.currency == el.coin;
       });
-      return <CoinCard name={el} key={index} price={coinPrice[0]} />;
+      return (
+        <CoinCard
+          coin={el}
+          key={index}
+          price={coinPrice[0]}
+          handleTrackChange={this.props.handleTrackChange}
+        />
+      );
     });
     return (
       <div>

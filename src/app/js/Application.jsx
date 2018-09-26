@@ -36,6 +36,7 @@ class Application extends React.Component {
     this._setTrackedCoins = this._setTrackedCoins.bind(this);
     this._setSelectedCoin = this._setSelectedCoin.bind(this);
     this._setGraphState = this._setGraphState.bind(this);
+    this._handleTrackChange = this._handleTrackChange.bind(this);
   }
 
   componentDidMount() {
@@ -87,6 +88,7 @@ class Application extends React.Component {
                   trackedCoins={this.state.trackedCoins}
                   setTrackedCoins={this._setTrackedCoins}
                   selectedCoin={this.state.selectedCoin}
+                  handleTrackChange={this._handleTrackChange}
                 />
               )}
             />
@@ -107,6 +109,49 @@ class Application extends React.Component {
     this.setState({
       user: null,
       trackedCoins: []
+    });
+  }
+
+  _handleTrackChange(type, val, coin, price_current, target, target2) {
+    let tempTracked = this.state.trackedCoins.map(el => {
+      if (el.coin === coin) {
+        el.price_current = price_current;
+        el.target_price1 = target;
+        el.target_price2 = target2;
+        if (type === "telegram") {
+          el.telegram_track = val == true ? true : false;
+          api
+            .post("/api/coin/addcoin", {
+              email: this.state.user.email,
+              coin: coin,
+              price_current: price_current,
+              target_price1: target,
+              target_price2: target2,
+              telegram_track: val == true ? true : false,
+              slack_track: el.slack_track
+            })
+            .then();
+        } else {
+          el.slack_track = val === true ? true : false;
+          api
+            .post("/api/coin/addcoin", {
+              email: this.state.user.email,
+              coin: coin,
+              price_current: price_current,
+              target_price1: target,
+              target_price2: target2,
+              telegram_track: el.telegram_track,
+              slack_track: val == true ? true : false
+            })
+            .then();
+        }
+        console.log(el);
+        return el;
+      }
+      return el;
+    });
+    this.setState({
+      trackedCoins: tempTracked
     });
   }
 

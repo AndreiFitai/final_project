@@ -9,10 +9,11 @@ let priceData = [];
 let filteredCoinNames = [];
 
 function getPrices() {
+  let result;
   axios
     .get(`https://api.nomics.com/v1/prices?key=${config.NOMICS_API}`)
     .then(result => {
-      priceData = result.data.map((el, index) => {
+      result = result.data.map((el, index) => {
         if (priceData.length === 0 || priceData[index].price === el.price) {
           el.direction = "same";
           return el;
@@ -24,6 +25,7 @@ function getPrices() {
           return el;
         }
       });
+      priceData = result;
     })
     .then(res => {
       Prices.findOneAndUpdate(

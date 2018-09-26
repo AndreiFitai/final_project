@@ -49,12 +49,12 @@ new CronJob(
   "Europe/Berlin"
 );
 
-new CronJob(
-  "* * */5 * * *",
-  function() {
-    sendTest();
-  },
-  null,
-  true,
-  "Europe/Berlin"
-);
+// new CronJob(
+//   "* * */5 * * *",
+//   function() {
+//     sendTest();
+//   },
+//   null,
+//   true,
+//   "Europe/Berlin"
+// );

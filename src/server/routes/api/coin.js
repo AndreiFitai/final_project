@@ -12,7 +12,6 @@ const CoinDashboard = require("../../models/CoinDashboard");
 let filteredCoinNames = [];
 
 router.get("/price/:coinName", (req, res) => {
-  console.log(req.params.coinName);
   Prices.find({})
     .then(result => {
       let foundCoin = result[0].prices.filter(el => {
@@ -93,7 +92,6 @@ router.get("/trackedCoins/:email", (req, res) => {
   User.findOne({
     email
   }).then(result => {
-    console.log(result)
     res.send(result.trackedCoins);
   });
 });

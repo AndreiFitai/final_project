@@ -130,7 +130,6 @@ class Application extends React.Component {
   }
 
   _setTrackedCoins() {
-    console.log("settrackedcoins");
     if (this.state.user)
       api
         .get(`/api/coin/trackedCoins/${this.state.user.email}`)

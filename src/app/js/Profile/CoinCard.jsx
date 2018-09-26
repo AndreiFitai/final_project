@@ -17,16 +17,16 @@ const CoinDeets = props => {
         <div className="notifSwitches">
           <div className="telegramSwitch">
             <p>Telegram</p>
-            <label class="switch">
+            <label className="switch">
               <input type="checkbox" />
-              <span class="slider round" />
+              <span className="slider round" />
             </label>
           </div>
           <div className="slackSwitch">
             <p>Slack</p>
-            <label class="switch">
+            <label className="switch">
               <input type="checkbox" />
-              <span class="slider round" />
+              <span className="slider round" />
             </label>
           </div>
         </div>

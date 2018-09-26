@@ -14,7 +14,11 @@ function getPrices() {
     .get(`https://api.nomics.com/v1/prices?key=${config.NOMICS_API}`)
     .then(result => {
       result = result.data.map((el, index) => {
-        if (priceData.length === 0 || priceData[index].price === el.price) {
+        if (
+          priceData.length === 0 ||
+          priceData[index] == "undefined" ||
+          priceData[index].price === el.price
+        ) {
           el.direction = "same";
           return el;
         } else if (priceData[index].price > el.price) {

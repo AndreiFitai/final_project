@@ -96,7 +96,7 @@ router.post("/addcoin", (req, res) => {
       slack_track
     },
     { upsert: true }
-  ).then(result => {});
+  ).then();
   res.send("ok");
 });
 

@@ -26,20 +26,26 @@ bot.onText(/\/start (.+)/, (msg, match) => {
   });
 });
 
-bot.onText(/\/notify (.+)/, (msg, match) => {
+bot.onText(/\/check (.+)/, (msg, match) => {
   // 'msg' is the received Message from Telegram
   // 'match' is the result of executing the regexp above on the text content
   // of the message
   const chatId = msg.chat.id;
-  const response = `Starting notification function`;
+  const response = `Checking ... `;
   bot.sendMessage(chatId, response);
-  notifyUser(match[1]);
+  if (match[1] === "all") {
+    checkAllTrackedCoins(chatId);
+  } else {
+    let coin = match[1].toUpperCase();
+    sendCoinPrice(chatId, coin);
+  }
 });
 
 function sendCoinPrice(chatId, coin) {
   Prices.find({}).then(result => {
+    console.log(coin);
     let coinData = result[0].prices.filter(el => {
-      return el.currency === coin;
+      return el.currency == coin;
     });
     console.log(coinData);
     bot.sendMessage(
@@ -49,48 +55,68 @@ function sendCoinPrice(chatId, coin) {
   });
 }
 
-function notifyUser(all) {
-  let whatToCheck = { telegram_track: true };
-  let check = false;
-  if (all === "all") {
-    check = true;
-    whatToCheck = {};
-  }
-  console.log(all, whatToCheck);
-  TrackedCoins.find(whatToCheck).then(result => {
+function checkCoins() {
+  let targetReached = false;
+  TrackedCoins.find({ telegram_track: true }).then(result => {
     result.forEach(element => {
       Prices.find({}).then(result => {
         let coinData = result[0].prices.filter(el => {
           return el.currency === element.coin;
         });
-        console.log(
-          Number(element.price_current) +
-            Number(element.price_current) *
-              (Number(element.target_price1) / 100),
-          coinData[0].price
-        );
         if (
+          coinData[0].price >=
           Number(element.price_current) +
             Number(element.price_current) *
-              (Number(element.target_price1) / 100) >=
-          coinData[0].price
+              (Number(element.target_price1) / 100)
         ) {
-          User.find({ email: element.email }).then(user => {
-            let response = check
-              ? `Current price of ${element.coin} is ${coinData[0].price}$ !`
-              : `Tracking target for ${
-                  element.coin
-                } reached ! Current price is ${
-                  coinData[0].price
-                }$ ! Visit CoinBotBuddy.com to select new tracking targets :)`;
-            bot.sendMessage(user[0].chatId, responses);
-          });
+          targetReached = true;
         }
+        User.find({ email: element.email }).then(user => {
+          if (targetReached) {
+            bot.sendMessage(
+              user[0].chatId,
+              `Tracking target for ${element.coin} reached ! Current price is ${
+                coinData[0].price
+              }$ ! Visit CoinBotBuddy.com to select new tracking targets :)`
+            );
+            targetReached = false;
+            TrackedCoins.findOneAndUpdate(
+              {
+                email: user[0].email,
+                coin: element.coin
+              },
+              {
+                telegram_track: false
+              },
+              { upsert: true }
+            ).then();
+          }
+        });
+      });
+    });
+  });
+}
+
+function checkAllTrackedCoins(chatId) {
+  console.log("notify user called");
+  User.find({ chatId: chatId }).then(user => {
+    TrackedCoins.find({}).then(result => {
+      result.forEach(element => {
+        Prices.find({}).then(result => {
+          let coinData = result[0].prices.filter(el => {
+            return el.currency === element.coin;
+          });
+          bot.sendMessage(
+            user[0].chatId,
+            `Current price of ${element.coin} is ${coinData[0].price}$ !`
+          );
+        });
       });
     });
   });
 }
 
 module.exports = {
-  sendCoinPrice
+  sendCoinPrice,
+  checkCoins
 };

@@ -36,12 +36,12 @@ router.post('/sign-up', (req, res) => {
         })
         .then(qrCode => {
             const hashedPassword = bcrypt.hashSync(password, 10)
-
+            console.log(picture)
             return new User({
                 email,
                 password: hashedPassword,
-                profilePicture: picture,
-                qrCode
+                profilePicture: String(picture),
+                qrCode: String(qrCode)
             }).save()
         })
         .then(user => {

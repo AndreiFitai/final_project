@@ -27,22 +27,17 @@ function uploadQRCode(email) {
         QRCode.toFile('tmp/qrcode.png', `https://t.me/coinbuddybot?start=${base64url.encode(email)}`, {
             color: {
                 dark: '#800080',
-                light: '#000'
+                light: '#fff'
             }
-        }).then(result => {
-            console.log(result)
         }).then(e => {
-            console.log(e)
-            file.mv(`tmp/qrcode.png`, function (err) {
-                if (err) return reject(err)
-                cloudinary.uploader.upload(`tmp/qrcode.png`).then(uploadResult => {
-                    fs.unlinkSync(`tmp/qrcode.png`)
-                    resolve(uploadResult.secure_url)
-                })
+            cloudinary.uploader.upload(`tmp/qrcode.png`).then(uploadResult => {
+                fs.unlinkSync(`tmp/qrcode.png`)
+                resolve(uploadResult.secure_url)
             })
         })
     })
 }
+
 
 
 

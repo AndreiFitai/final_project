@@ -72,25 +72,28 @@ router.get("/dashboards", (req, res) => {
 });
 
 router.post("/addcoin", (req, res) => {
-  const { email, coin } = req.body;
-  User.findOneAndUpdate(
-    {
-      email
-    },
-    {
-      $push: {
-        trackedCoins: coin
-      }
+  const {
+    email,
+    coin
+  } = req.body;
+  User.findOneAndUpdate({
+    email
+  }, {
+    $push: {
+      trackedCoins: coin
     }
-  ).then(result => {});
+  }).then(result => {});
   res.send("ok");
 });
 
 router.get("/trackedCoins/:email", (req, res) => {
+  console.log('callled tracked coins !');
+
   const email = req.params.email;
   User.findOne({
     email
   }).then(result => {
+    console.log(result)
     res.send(result.trackedCoins);
   });
 });

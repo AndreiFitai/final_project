@@ -3,10 +3,34 @@ import React from "react";
 const CoinDeets = props => {
   return (
     <div className="coinCard">
-      <div>Testing</div>
-      <div>to see</div>
+      <div className="coinTrackedDetails">
+        <div>{props.name}</div>
+        <div> . </div>
+        <div className={`price price${props.price.direction}`}>
+          {props.price.price}
+        </div>
+      </div>
       <div />
-      <div>{props.name}</div>
+      <br />
+      <div className="notifContainer">
+        <div className="notifSettings">Target price or %</div>
+        <div className="notifSwitches">
+          <div className="telegramSwitch">
+            <p>Telegram</p>
+            <label class="switch">
+              <input type="checkbox" />
+              <span class="slider round" />
+            </label>
+          </div>
+          <div className="slackSwitch">
+            <p>Slack</p>
+            <label class="switch">
+              <input type="checkbox" />
+              <span class="slider round" />
+            </label>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

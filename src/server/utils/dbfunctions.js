@@ -12,35 +12,27 @@ function getPrices() {
   axios
     .get(`https://api.nomics.com/v1/prices?key=${config.NOMICS_API}`)
     .then(result => {
-      priceData = result.data
-        .filter(el => {
-          return filteredCoinNames.indexOf(el.currency) !== -1;
-        })
-        .map((el, index) => {
-          if (priceData.length === 0 || priceData[index].price === el.price) {
-            el.direction = "same";
-            return el;
-          } else if (priceData[index].price > el.price) {
-            el.direction = "down";
-            return el;
-          } else {
-            el.direction = "up";
-            return el;
-          }
-        });
-      Prices.findOneAndUpdate(
-        {},
-        {
-          prices: result.data
-        },
-        {
-          upsert: true
+      priceData = result.data.map((el, index) => {
+        if (priceData.length === 0 || priceData[index].price === el.price) {
+          el.direction = "same";
+          return el;
+        } else if (priceData[index].price > el.price) {
+          el.direction = "down";
+          return el;
+        } else {
+          el.direction = "up";
+          return el;
         }
-      ).then();
+      });
+      Prices.findOneAndUpdate({}, {
+        prices: result.data
+      }, {
+        upsert: true
+      }).then();
     })
     .catch(error => {
-      console.log(error);
-      res.send("error");
+      console.error(error);
+      // res.send("error");
     });
 }
 
@@ -56,23 +48,19 @@ function getTop10() {
         return el.CoinInfo.Name;
       });
       data.forEach(coin => {
-        Top10.findOneAndUpdate(
-          {
-            currency: coin.CoinInfo.Name
-          },
-          {
-            currency: coin.CoinInfo.Name,
-            data: {
-              fullname: coin.CoinInfo.FullName,
-              imgUrl: coin.CoinInfo.ImageUrl,
-              supply: coin.ConversionInfo.Supply,
-              totalVol: coin.ConversionInfo.TotalVolume24H
-            }
-          },
-          {
-            upsert: true
+        Top10.findOneAndUpdate({
+          currency: coin.CoinInfo.Name
+        }, {
+          currency: coin.CoinInfo.Name,
+          data: {
+            fullname: coin.CoinInfo.FullName,
+            imgUrl: coin.CoinInfo.ImageUrl,
+            supply: coin.ConversionInfo.Supply,
+            totalVol: coin.ConversionInfo.TotalVolume24H
           }
-        ).then();
+        }, {
+          upsert: true
+        }).then();
       });
     })
     .catch(error => {
@@ -97,33 +85,29 @@ function getHistoryData() {
             return result.currency == el;
           });
         }
-        CoinHistory.findOneAndUpdate(
-          {
-            currency: el
+        CoinHistory.findOneAndUpdate({
+          currency: el
+        }, {
+          currency: el,
+          day: {
+            timestamps: history.day[0] ? history.day[0].timestamps : [],
+            closes: history.day[0] ? history.day[0].closes : []
           },
-          {
-            currency: el,
-            day: {
-              timestamps: history.day[0] ? history.day[0].timestamps : [],
-              closes: history.day[0] ? history.day[0].closes : []
-            },
-            week: {
-              timestamps: history.week[0] ? history.week[0].timestamps : [],
-              closes: history.week[0] ? history.week[0].closes : []
-            },
-            month: {
-              timestamps: history.month[0] ? history.month[0].timestamps : [],
-              closes: history.month[0] ? history.month[0].closes : []
-            },
-            year: {
-              timestamps: history.year[0] ? history.year[0].timestamps : [],
-              closes: history.year[0] ? history.year[0].closes : []
-            }
+          week: {
+            timestamps: history.week[0] ? history.week[0].timestamps : [],
+            closes: history.week[0] ? history.week[0].closes : []
           },
-          {
-            upsert: true
+          month: {
+            timestamps: history.month[0] ? history.month[0].timestamps : [],
+            closes: history.month[0] ? history.month[0].closes : []
+          },
+          year: {
+            timestamps: history.year[0] ? history.year[0].timestamps : [],
+            closes: history.year[0] ? history.year[0].closes : []
           }
-        ).then();
+        }, {
+          upsert: true
+        }).then();
       });
     })
     .catch(error => {
@@ -137,32 +121,32 @@ function getDashboards() {
     .get(`https://api.nomics.com/v1/dashboard?key=${config.NOMICS_API}`)
     .then(result => {
       result.data.forEach(element => {
-        CoinDashboard.findOneAndUpdate(
-          { currency: element.currency },
-          {
-            currency: element.currency,
-            dayOpen: element.dayOpen,
-            dayVolume: element.dayVolume,
-            dayOpenVolume: element.dayOpenVolume,
-            weekOpen: element.weekOpen,
-            weekVolume: element.weekVolume,
-            weekOpenVolume: element.weekOpenVolume,
-            monthOpen: element.monthOpen,
-            monthVolume: element.monthVolume,
-            monthOpenVolume: element.monthOpenVolume,
-            yearOpen: element.yearOpen,
-            yearVolume: element.yearVolume,
-            yearOpenVolume: element.yearOpenVolume,
-            close: element.close,
-            high: element.high,
-            highTimestamp: element.highTimestamp,
-            highExchange: element.highExchange,
-            highQuoteCurrency: element.highQuoteCurrency,
-            availableSupply: element.availableSupply,
-            maxSupply: element.maxSupply
-          },
-          { upsert: true }
-        ).then();
+        CoinDashboard.findOneAndUpdate({
+          currency: element.currency
+        }, {
+          currency: element.currency,
+          dayOpen: element.dayOpen,
+          dayVolume: element.dayVolume,
+          dayOpenVolume: element.dayOpenVolume,
+          weekOpen: element.weekOpen,
+          weekVolume: element.weekVolume,
+          weekOpenVolume: element.weekOpenVolume,
+          monthOpen: element.monthOpen,
+          monthVolume: element.monthVolume,
+          monthOpenVolume: element.monthOpenVolume,
+          yearOpen: element.yearOpen,
+          yearVolume: element.yearVolume,
+          yearOpenVolume: element.yearOpenVolume,
+          close: element.close,
+          high: element.high,
+          highTimestamp: element.highTimestamp,
+          highExchange: element.highExchange,
+          highQuoteCurrency: element.highQuoteCurrency,
+          availableSupply: element.availableSupply,
+          maxSupply: element.maxSupply
+        }, {
+          upsert: true
+        }).then();
       });
     });
 }

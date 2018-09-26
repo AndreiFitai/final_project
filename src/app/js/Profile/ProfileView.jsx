@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
 import CoinCard from "./CoinCard";
 import api from "../utils/api";
+import base64url from "base64url";
 
 class ProfileView extends Component {
   render() {
@@ -26,7 +27,17 @@ class ProfileView extends Component {
             <img src={this.props.user.profilePicture} alt="" />
           </div>
           <br />
-          {this.props.user.email}
+          <div>Welcome back {this.props.user.email} ! </div>
+          <br />
+
+          <a
+            href={`https://t.me/coinbuddybot?start=${base64url.encode(
+              this.props.user.email
+            )}`}
+            target="_blank"
+          >
+            <div> Connect to the Telegram bot to recieve updates !</div>
+          </a>
         </div>
         <div className="cardContainer">{coinCards}</div>
       </div>

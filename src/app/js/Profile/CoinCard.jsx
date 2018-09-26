@@ -23,13 +23,13 @@ const CoinDeets = props => {
               <input
                 type="checkbox"
                 checked={props.coin.telegram_track}
-                onClick={e =>
+                onChange={e =>
                   props.handleTrackChange(
                     "telegram",
                     e.target.checked,
                     props.coin.coin,
                     props.price.price,
-                    "10%"
+                    "5"
                   )
                 }
               />
@@ -42,13 +42,13 @@ const CoinDeets = props => {
               <input
                 type="checkbox"
                 checked={props.coin.slack_track}
-                onClick={e =>
+                onChange={e =>
                   props.handleTrackChange(
                     "slack",
                     e.target.checked,
                     props.coin.coin,
                     props.price.price,
-                    "10%"
+                    "5"
                   )
                 }
               />

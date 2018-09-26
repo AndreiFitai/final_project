@@ -7,7 +7,7 @@ const {
   getHistoryData,
   getDashboards
 } = require("./dbfunctions");
-const { sendTest } = require("./telegramBot");
+const { sendCoinPrice } = require("./telegramBot");
 
 new CronJob(
   "*/10 * * * * *",
@@ -50,9 +50,9 @@ new CronJob(
 );
 
 // new CronJob(
-//   "* * */5 * * *",
+//   "*/10 * * * * *",
 //   function() {
-//     sendTest();
+//     sendCoinPrice(502674309, "BTC");
 //   },
 //   null,
 //   true,

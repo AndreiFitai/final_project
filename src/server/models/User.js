@@ -14,6 +14,9 @@ const userSchema = new Schema({
     type: String,
     default:
       "https://upload.wikimedia.org/wikipedia/commons/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg"
+  },
+  chatId: {
+    type: String
   }
 });
 

@@ -7,11 +7,13 @@ const {
   getHistoryData,
   getDashboards
 } = require("./dbfunctions");
-const { sendCoinPrice, checkCoins } = require("./telegramBot");
+const {
+  checkTrackedCoinsTelegram
+} = require("./telegramBot");
 
 new CronJob(
   "*/10 * * * * *",
-  function() {
+  function () {
     getPrices();
   },
   null,
@@ -21,7 +23,7 @@ new CronJob(
 
 new CronJob(
   "* * */12 * * *",
-  function() {
+  function () {
     getTop10();
   },
   null,
@@ -31,7 +33,7 @@ new CronJob(
 
 new CronJob(
   "* * */12 * * *",
-  function() {
+  function () {
     getDashboards();
   },
   null,
@@ -41,7 +43,7 @@ new CronJob(
 
 new CronJob(
   "* * */1 * * *",
-  function() {
+  function () {
     getHistoryData();
   },
   null,
@@ -51,8 +53,8 @@ new CronJob(
 
 new CronJob(
   "* */30 * * * *",
-  function() {
-    checkCoins();
+  function () {
+    checkTrackedCoinsTelegram();
   },
   null,
   true,

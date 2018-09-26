@@ -8,7 +8,9 @@ const TrackedCoins = require("../models/TrackedCoins");
 const token = config.TELEGRAM_TOKEN;
 
 // Create a bot that uses 'polling' to fetch new updates
-const bot = new TelegramBot(token, { polling: true });
+const bot = new TelegramBot(token, {
+  polling: true
+});
 
 bot.onText(/\/start (.+)/, (msg, match) => {
   // 'msg' is the received Message from Telegram
@@ -20,7 +22,11 @@ bot.onText(/\/start (.+)/, (msg, match) => {
 
   const response = `Hi, ${decodedEmail} ! Nice to meet you ! You have succesfuly connected !`;
 
-  User.findOneAndUpdate({ email: decodedEmail }, { chatId }).then(e => {
+  User.findOneAndUpdate({
+    email: decodedEmail
+  }, {
+    chatId
+  }).then(e => {
     console.log(e);
     bot.sendMessage(chatId, response);
   });
@@ -55,9 +61,11 @@ function sendCoinPrice(chatId, coin) {
   });
 }
 
-function checkCoins() {
+function checkTrackedCoinsTelegram() {
   let targetReached = false;
-  TrackedCoins.find({ telegram_track: true }).then(result => {
+  TrackedCoins.find({
+    telegram_track: true
+  }).then(result => {
     result.forEach(element => {
       Prices.find({}).then(result => {
         let coinData = result[0].prices.filter(el => {
@@ -66,12 +74,14 @@ function checkCoins() {
         if (
           coinData[0].price >=
           Number(element.price_current) +
-            Number(element.price_current) *
-              (Number(element.target_price1) / 100)
+          Number(element.price_current) *
+          (Number(element.target_price) / 100)
         ) {
           targetReached = true;
         }
-        User.find({ email: element.email }).then(user => {
+        User.find({
+          email: element.email
+        }).then(user => {
           if (targetReached) {
             bot.sendMessage(
               user[0].chatId,
@@ -80,16 +90,14 @@ function checkCoins() {
               }$ ! Visit CoinBotBuddy.com to select new tracking targets :)`
             );
             targetReached = false;
-            TrackedCoins.findOneAndUpdate(
-              {
-                email: user[0].email,
-                coin: element.coin
-              },
-              {
-                telegram_track: false
-              },
-              { upsert: true }
-            ).then();
+            TrackedCoins.findOneAndUpdate({
+              email: user[0].email,
+              coin: element.coin
+            }, {
+              telegram_track: false
+            }, {
+              upsert: true
+            }).then();
           }
         });
       });
@@ -99,7 +107,9 @@ function checkCoins() {
 
 function checkAllTrackedCoins(chatId) {
   console.log("notify user called");
-  User.find({ chatId: chatId }).then(user => {
+  User.find({
+    chatId: chatId
+  }).then(user => {
     TrackedCoins.find({}).then(result => {
       result.forEach(element => {
         Prices.find({}).then(result => {
@@ -117,6 +127,5 @@ function checkAllTrackedCoins(chatId) {
 }
 
 module.exports = {
-  sendCoinPrice,
-  checkCoins
+  checkTrackedCoinsTelegram
 };

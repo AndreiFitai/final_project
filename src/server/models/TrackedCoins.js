@@ -11,10 +11,7 @@ const trackedCoinsSchema = new Schema({
   price_current: {
     type: String
   },
-  target_price1: {
-    type: String
-  },
-  target_price2: {
+  target_price: {
     type: String
   },
   telegram_track: {

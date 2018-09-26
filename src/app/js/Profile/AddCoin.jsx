@@ -9,8 +9,7 @@ class AddCoin extends React.Component {
         email: this.props.user.email,
         coin: this.props.selectedCoin,
         price_current: "",
-        target_price1: "",
-        target_price2: "",
+        target_price: "",
         telegram_track: false,
         slack_track: false
       })

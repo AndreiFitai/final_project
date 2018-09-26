@@ -1,8 +1,7 @@
 module.exports = {
   IS_PRODUCTION: process.env.NODE_ENV === "production",
   PORT: process.env.PORT || 3000,
-  MONGODB_URI:
-    process.env.MONGODB_URI || "mongodb://localhost:27017/final_project",
+  MONGODB_URI: process.env.MONGODB_URI || "mongodb://localhost:27017/final_project",
   SECRET_JWT_PASSPHRASE: "TWLom9RDbmGYBtkHHPe4m8pKswyUY",
   CLOUDINARY_NAME: "dgxhw3h7g",
   CLOUDINARY_KEY: "244223531618416",

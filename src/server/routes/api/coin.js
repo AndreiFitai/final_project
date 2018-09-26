@@ -76,27 +76,23 @@ router.post("/addcoin", (req, res) => {
     email,
     coin,
     price_current,
-    target_price1,
-    target_price2,
+    target_price,
     telegram_track,
     slack_track
   } = req.body;
-  TrackedCoins.findOneAndUpdate(
-    {
-      email,
-      coin
-    },
-    {
-      email,
-      coin,
-      price_current,
-      target_price1,
-      target_price2,
-      telegram_track,
-      slack_track
-    },
-    { upsert: true }
-  ).then();
+  TrackedCoins.findOneAndUpdate({
+    email,
+    coin
+  }, {
+    email,
+    coin,
+    price_current,
+    target_price,
+    telegram_track,
+    slack_track
+  }, {
+    upsert: true
+  }).then();
   res.send("ok");
 });
 

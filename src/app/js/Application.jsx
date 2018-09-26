@@ -112,12 +112,11 @@ class Application extends React.Component {
     });
   }
 
-  _handleTrackChange(type, val, coin, price_current, target, target2) {
+  _handleTrackChange(type, val, coin, price_current, target) {
     let tempTracked = this.state.trackedCoins.map(el => {
       if (el.coin === coin) {
         el.price_current = price_current;
-        el.target_price1 = target;
-        el.target_price2 = target2;
+        el.target_price = target;
         if (type === "telegram") {
           el.telegram_track = val == true ? true : false;
           api
@@ -125,8 +124,7 @@ class Application extends React.Component {
               email: this.state.user.email,
               coin: coin,
               price_current: price_current,
-              target_price1: target,
-              target_price2: target2,
+              target_price: target,
               telegram_track: val == true ? true : false,
               slack_track: el.slack_track
             })
@@ -138,8 +136,7 @@ class Application extends React.Component {
               email: this.state.user.email,
               coin: coin,
               price_current: price_current,
-              target_price1: target,
-              target_price2: target2,
+              target_price: target,
               telegram_track: el.telegram_track,
               slack_track: val == true ? true : false
             })

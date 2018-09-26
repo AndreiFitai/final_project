@@ -12,8 +12,10 @@ const userSchema = new Schema({
   },
   profilePicture: {
     type: String,
-    default:
-      "https://upload.wikimedia.org/wikipedia/commons/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg"
+    default: "https://upload.wikimedia.org/wikipedia/commons/9/93/Default_profile_picture_%28male%29_on_Facebook.jpg"
+  },
+  qrCode: {
+    type: String,
   },
   chatId: {
     type: String

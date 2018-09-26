@@ -9,7 +9,8 @@ const chalk = require("chalk");
 const fs = require("fs");
 const fileUpload = require("express-fileupload");
 const io = require("socket.io")();
-const cronJobs = require("./utils/data");
+const cronJobs = require("./utils/cronJobs");
+const telegram = require("./utils/telegramBot");
 const {
   getTop10,
   getPrices,

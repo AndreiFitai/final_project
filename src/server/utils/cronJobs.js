@@ -7,6 +7,7 @@ const {
   getHistoryData,
   getDashboards
 } = require("./dbfunctions");
+const { sendTest } = require("./telegramBot");
 
 new CronJob(
   "*/10 * * * * *",
@@ -42,6 +43,16 @@ new CronJob(
   "* * */1 * * *",
   function() {
     getHistoryData();
+  },
+  null,
+  true,
+  "Europe/Berlin"
+);
+
+new CronJob(
+  "* * */5 * * *",
+  function() {
+    sendTest();
   },
   null,
   true,

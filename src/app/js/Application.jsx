@@ -175,10 +175,12 @@ class Application extends React.Component {
       let data = this.state.trackedCoins;
       data.push(coin);
       this.setState({ trackedCoins: data });
-    } else this.state.user;
-    api.get(`/api/coin/trackedCoins/${this.state.user.email}`).then(result => {
-      this.setState({ trackedCoins: result });
-    });
+    } else if (this.state.user)
+      api
+        .get(`/api/coin/trackedCoins/${this.state.user.email}`)
+        .then(result => {
+          this.setState({ trackedCoins: result });
+        });
   }
 
   _setGraphState(isOpen, timeframe, index) {

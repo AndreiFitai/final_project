@@ -17,6 +17,7 @@ class CoinDeets extends React.Component {
       value: val
     });
   }
+
   render() {
     let price;
     let targetPrice;
@@ -40,7 +41,7 @@ class CoinDeets extends React.Component {
                 this.props.price ? this.props.price.direction : "same"
               }`}
             >
-              {price}
+              Current price: {price} $
             </div>
           </div>
         </div>
@@ -48,7 +49,6 @@ class CoinDeets extends React.Component {
         <br />
         <div className="notifContainer">
           <div className="notifSettings">
-            <p>Target price: {targetPrice}</p>
             <span className="valuePadding">
               <input
                 type="number"
@@ -60,6 +60,7 @@ class CoinDeets extends React.Component {
               />
               %
             </span>
+            <p>Target price: {Number(targetPrice).toFixed(4)}$</p>
           </div>
           <div className="notifSwitches">
             <div className="telegramSwitch">
@@ -80,6 +81,14 @@ class CoinDeets extends React.Component {
                 />
                 <span className="slider round" />
               </label>
+            </div>
+            <div className="removeCoin">
+              <button
+                onClick={e => this.props.removeCoin(this.props.coin._id)}
+                className="btn btnRemoveCoin"
+              >
+                Remove tracking
+              </button>
             </div>
           </div>
         </div>

@@ -6,6 +6,17 @@ import api from "../utils/api";
 import base64url from "base64url";
 
 class ProfileView extends Component {
+  constructor(props) {
+    super(props);
+
+    this._removeCoin = this._removeCoin.bind(this);
+  }
+
+  _removeCoin(id) {
+    console.log("id called in profile view", id);
+    api.post("/api/coin/removecoin", { id }).then(this.props.setTrackedCoins());
+  }
+
   render() {
     let coinCards = this.props.trackedCoins.map((el, index) => {
       let coinPrice = this.props.priceData.filter(price => {
@@ -17,6 +28,7 @@ class ProfileView extends Component {
           key={index}
           price={coinPrice[0]}
           handleTrackChange={this.props.handleTrackChange}
+          removeCoin={this._removeCoin}
         />
       );
     });

@@ -12,6 +12,7 @@ const bot = new TelegramBot(token, {
   polling: true
 });
 
+let chatIdConfirm;
 bot.onText(/\/start (.+)/, (msg, match) => {
   // 'msg' is the received Message from Telegram
   // 'match' is the result of executing the regexp above on the text content
@@ -31,6 +32,7 @@ bot.onText(/\/start (.+)/, (msg, match) => {
     }
   ).then(e => {
     bot.sendMessage(chatId, response);
+    chatIdConfirm = chatId;
   });
 });
 
@@ -40,6 +42,7 @@ bot.onText(/\/check (.+)/, (msg, match) => {
   // of the message
   const chatId = msg.chat.id;
   const response = `Checking ... `;
+
   bot.sendMessage(chatId, response);
   if (match[1] === "all") {
     checkAllTrackedCoins(chatId);
@@ -131,6 +134,16 @@ function checkAllTrackedCoins(chatId) {
   });
 }
 
+function confirmConnection() {
+  return chatIdConfirm;
+}
+
+function resetConfirm() {
+  chatIdConfirm = undefined;
+}
+
 module.exports = {
-  checkTrackedCoinsTelegram
+  checkTrackedCoinsTelegram,
+  confirmConnection,
+  resetConfirm
 };

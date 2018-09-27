@@ -55,6 +55,18 @@ io.on("connection", client => {
       client.emit("priceData", data);
     }, interval);
   });
+  client.on("checkChatId", interval => {
+    let checkInterval = setInterval(() => {
+      let check = telegram.confirmConnection();
+      var data = getPriceData();
+      if (check) {
+        console.log("client called to checkChatId ");
+        client.emit("chatId", check);
+        clearInterval(checkInterval);
+        telegram.resetConfirm();
+      }
+    }, interval);
+  });
 });
 
 io.listen(config.SOCKETSIO_PORT);

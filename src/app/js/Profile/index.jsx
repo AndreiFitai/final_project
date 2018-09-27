@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import ProfileView from "./ProfileView";
 import AddCoin from "./AddCoin";
 import NotFound from "../NotFound";
+import RemoveCoin from "./RemoveCoin";
 
 class Profile extends Component {
   render() {

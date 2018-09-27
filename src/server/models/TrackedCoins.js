@@ -2,6 +2,12 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const trackedCoinsSchema = new Schema({
+  _id: {
+    type: mongoose.Schema.Types.ObjectId,
+    index: true,
+    required: true,
+    auto: true
+  },
   email: {
     type: String
   },

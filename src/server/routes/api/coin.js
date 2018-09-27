@@ -3,6 +3,7 @@ const router = express.Router();
 const axios = require("axios");
 const config = require("../../config");
 const moment = require("moment");
+const mongoose = require("mongoose");
 const CoinHistory = require("../../models/CoinHistory");
 const Prices = require("../../models/Prices");
 const Top10 = require("../../models/Top10");
@@ -72,26 +73,30 @@ router.get("/dashboards", (req, res) => {
 });
 
 router.post("/addcoin", (req, res) => {
-  const {
-    email,
-    coin,
-    price_current,
-    target_price,
-    telegram_track,
-    slack_track
-  } = req.body;
-  TrackedCoins.findOneAndUpdate({
-    email,
-    coin
-  }, {
-    email,
-    coin,
-    price_current,
-    target_price,
-    telegram_track,
-    slack_track
-  }, {
-    upsert: true
+  const { email, coin, price_current, target_price, telegram_track } = req.body;
+  TrackedCoins.findOneAndUpdate(
+    {
+      email,
+      coin
+    },
+    {
+      email,
+      coin,
+      price_current,
+      target_price,
+      telegram_track
+    },
+    {
+      upsert: true
+    }
+  ).then();
+  res.send("ok");
+});
+
+router.post("/removecoin", (req, res) => {
+  console.log("remove coin api called", req.body);
+  TrackedCoins.findByIdAndRemove({
+    _id: mongoose.Types.ObjectId(req.body.id)
   }).then();
   res.send("ok");
 });

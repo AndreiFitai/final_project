@@ -8,7 +8,7 @@ import Navigation from "./Navigation";
 import Profile from "./Profile";
 import NotFound from "./NotFound";
 import api from "./utils/api";
-import { getData, setUserChatId } from "./utils/timer";
+import { getData, checkUserChatId } from "./utils/timer";
 
 class Application extends React.Component {
   constructor(props) {
@@ -28,6 +28,14 @@ class Application extends React.Component {
     getData((err, data) => {
       this.setState({
         priceData: data
+      });
+    });
+
+    checkUserChatId((err, data) => {
+      let newUser = this.state.user;
+      newUser.chatId = data;
+      this.setState({
+        user: newUser
       });
     });
 
@@ -157,8 +165,8 @@ class Application extends React.Component {
       const decoded = jwtDecode(token);
       delete decoded.iat;
       if (init) return decoded;
-      this._setTrackedCoins();
       this.setState({ user: decoded });
+      this._setTrackedCoins();
     } else {
       return null;
     }

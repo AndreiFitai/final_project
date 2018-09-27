@@ -23,8 +23,10 @@
   justify-content: space-around;
 
   .coinCard {
-    width: 25vw;
-    height: 30vh;
+    width: 325px;
+    height: 250px;
+    min-width: 325px;
+    min-height: 250px;
     border: 2px solid purple;
     border-radius: 10px;
     margin: 20px;
@@ -41,7 +43,7 @@
 
       @keyframes down {
         from {
-          background-color: rgba($color: #f00, $alpha: 1);
+          background-color: rgba($color: #f00, $alpha: 0.8);
         }
 
         to {
@@ -51,12 +53,16 @@
 
       @keyframes up {
         from {
-          background-color: rgba($color: #0f0, $alpha: 1);
+          background-color: rgba($color: #0f0, $alpha: 0.8);
         }
 
         to {
           background-color: rgba($color: #0f0, $alpha: 0);
         }
+      }
+
+      .price {
+        margin: 5px 0;
       }
 
       .priceup {
@@ -71,20 +77,26 @@
     }
 
     .notifContainer {
-      input[type="number"] {
-        width: 15%;
-        padding: 12px 20px;
-        margin: 8px 0;
-        box-sizing: border-box;
-      }
+      .notifSettings {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: space-between;
+        input[type="number"] {
+          font-size: 18px;
+          width: 75px;
+          padding: 12px 20px;
+          box-sizing: border-box;
+        }
 
-      .valuePadding {
-        border: 1px inset #ccc;
-      }
-      .valuePadding input {
-        border: none;
-        padding: 0px;
-        outline: none;
+        .valuePadding {
+          border: 0px inset #ccc;
+        }
+        .valuePadding input {
+          border: none;
+          padding: 0px;
+          outline: none;
+        }
       }
 
       .notifSwitches {

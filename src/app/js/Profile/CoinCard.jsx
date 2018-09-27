@@ -42,10 +42,9 @@ class CoinDeets extends React.Component {
             >
               {price}
             </div>
-            </div>
           </div>
         </div>
-        <div />
+
         <br />
         <div className="notifContainer">
           <div className="notifSettings">

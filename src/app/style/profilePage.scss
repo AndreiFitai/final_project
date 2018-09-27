@@ -15,8 +15,9 @@
 }
 
 .cardContainer {
-  border: 1px solid red;
+  // border: 1px solid red;
   width: 85vw;
+  margin: 0 auto;
   display: flex;
   flex-flow: row wrap;
   justify-content: space-around;
@@ -27,9 +28,13 @@
     border: 2px solid purple;
     border-radius: 10px;
     margin: 20px;
+    padding: 20px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-items: center;
+    align-content: center;
 
     .coinTrackedDetails {
-
       .price {
         display: inline-block;
       }
@@ -66,6 +71,22 @@
     }
 
     .notifContainer {
+      input[type="number"] {
+        width: 10%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+      }
+
+      .valuePadding {
+        border: 1px inset #ccc;
+      }
+      .valuePadding input {
+        border: none;
+        padding: 0px;
+        outline: none;
+      }
+
       .notifSwitches {
         display: flex;
         flex-flow: row nowrap;
@@ -93,8 +114,8 @@
         right: 0;
         bottom: 0;
         background-color: #ccc;
-        -webkit-transition: .4s;
-        transition: .4s;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
       }
 
       .slider:before {
@@ -105,19 +126,19 @@
         left: 4px;
         bottom: 4px;
         background-color: white;
-        -webkit-transition: .4s;
-        transition: .4s;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
       }
 
-      input:checked+.slider {
+      input:checked + .slider {
         background-color: purple;
       }
 
-      input:focus+.slider {
+      input:focus + .slider {
         box-shadow: 0 0 1px purple;
       }
 
-      input:checked+.slider:before {
+      input:checked + .slider:before {
         -webkit-transform: translateX(26px);
         -ms-transform: translateX(26px);
         transform: translateX(26px);

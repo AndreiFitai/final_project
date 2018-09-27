@@ -51,7 +51,8 @@ io.on("connection", client => {
   client.on("sendData", interval => {
     console.log("client is subscribing to sendData with interval ", interval);
     setInterval(() => {
-      client.emit("priceData", getPriceData());
+      var data = getPriceData();
+      client.emit("priceData", data);
     }, interval);
   });
 });

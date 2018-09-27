@@ -22,12 +22,14 @@ bot.onText(/\/start (.+)/, (msg, match) => {
 
   const response = `Hi, ${decodedEmail} ! Nice to meet you ! You have succesfuly connected !`;
 
-  User.findOneAndUpdate({
-    email: decodedEmail
-  }, {
-    chatId
-  }).then(e => {
-    console.log(e);
+  User.findOneAndUpdate(
+    {
+      email: decodedEmail
+    },
+    {
+      chatId
+    }
+  ).then(e => {
     bot.sendMessage(chatId, response);
   });
 });
@@ -74,8 +76,7 @@ function checkTrackedCoinsTelegram() {
         if (
           coinData[0].price >=
           Number(element.price_current) +
-          Number(element.price_current) *
-          (Number(element.target_price) / 100)
+            Number(element.price_current) * (Number(element.target_price) / 100)
         ) {
           targetReached = true;
         }
@@ -90,14 +91,18 @@ function checkTrackedCoinsTelegram() {
               }$ ! Visit CoinBotBuddy.com to select new tracking targets :)`
             );
             targetReached = false;
-            TrackedCoins.findOneAndUpdate({
-              email: user[0].email,
-              coin: element.coin
-            }, {
-              telegram_track: false
-            }, {
-              upsert: true
-            }).then();
+            TrackedCoins.findOneAndUpdate(
+              {
+                email: user[0].email,
+                coin: element.coin
+              },
+              {
+                telegram_track: false
+              },
+              {
+                upsert: true
+              }
+            ).then();
           }
         });
       });

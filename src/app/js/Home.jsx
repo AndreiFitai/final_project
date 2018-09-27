@@ -45,12 +45,7 @@ const Home = props => {
     );
   });
 
-  return (
-    <div className="container">
-      <h1>Hello, {props.user ? props.user.email : "Stranger"}!</h1>
-      {props.data ? coinTabs : <div />}
-    </div>
-  );
+  return <div className="container">{props.data ? coinTabs : <div />}</div>;
 };
 
 export default Home;

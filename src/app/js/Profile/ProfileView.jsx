@@ -20,6 +20,27 @@ class ProfileView extends Component {
         />
       );
     });
+    let telegramPrompt;
+    if (!this.props.user.chatId) {
+      telegramPrompt = (
+        <div className="telegramConnect">
+          <a
+            href={`https://t.me/coinbuddybot?start=${base64url.encode(
+              this.props.user.email
+            )}`}
+            target="_blank"
+          >
+            <div> Connect to CoinBuddyBot on Telegram to recieve updates !</div>
+          </a>
+          <br />
+          <img src={this.props.user.qrCode} alt="qrcode" />
+        </div>
+      );
+    } else {
+      telegramPrompt = (
+        <div className="telegramConnect">Connected to CoinBuddyBot !</div>
+      );
+    }
     return (
       <div>
         <div className="userHeader">
@@ -29,15 +50,7 @@ class ProfileView extends Component {
           <br />
           <div>Welcome back {this.props.user.email} ! </div>
           <br />
-
-          <a
-            href={`https://t.me/coinbuddybot?start=${base64url.encode(
-              this.props.user.email
-            )}`}
-            target="_blank"
-          >
-            <div> Connect to the Telegram bot to recieve updates !</div>
-          </a>
+          {telegramPrompt}
         </div>
         <div className="cardContainer">{coinCards}</div>
       </div>

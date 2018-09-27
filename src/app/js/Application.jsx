@@ -8,7 +8,7 @@ import Navigation from "./Navigation";
 import Profile from "./Profile";
 import NotFound from "./NotFound";
 import api from "./utils/api";
-import { subscribeToTimer, getData } from "./utils/timer";
+import { getData, setUserChatId } from "./utils/timer";
 
 class Application extends React.Component {
   constructor(props) {
@@ -142,7 +142,6 @@ class Application extends React.Component {
             })
             .then();
         }
-        console.log(el);
         return el;
       }
       return el;
@@ -171,13 +170,15 @@ class Application extends React.Component {
     });
   }
 
-  _setTrackedCoins() {
-    if (this.state.user)
-      api
-        .get(`/api/coin/trackedCoins/${this.state.user.email}`)
-        .then(result => {
-          this.setState({ trackedCoins: result });
-        });
+  _setTrackedCoins(coin) {
+    if (coin) {
+      let data = this.state.trackedCoins;
+      data.push(coin);
+      this.setState({ trackedCoins: data });
+    } else this.state.user;
+    api.get(`/api/coin/trackedCoins/${this.state.user.email}`).then(result => {
+      this.setState({ trackedCoins: result });
+    });
   }
 
   _setGraphState(isOpen, timeframe, index) {

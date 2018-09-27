@@ -20,36 +20,6 @@ new CronJob(
 );
 
 new CronJob(
-  "* * */12 * * *",
-  function() {
-    getTop10();
-  },
-  null,
-  true,
-  "Europe/Berlin"
-);
-
-new CronJob(
-  "* * */12 * * *",
-  function() {
-    getDashboards();
-  },
-  null,
-  true,
-  "Europe/Berlin"
-);
-
-new CronJob(
-  "* * */1 * * *",
-  function() {
-    getHistoryData();
-  },
-  null,
-  true,
-  "Europe/Berlin"
-);
-
-new CronJob(
   "* */30 * * * *",
   function() {
     checkTrackedCoinsTelegram();

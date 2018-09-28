@@ -1,5 +1,5 @@
 import openSocket from "socket.io-client";
-const socket = openSocket(`https:///coinbuddybot.herokuapp.com`);
+const socket = openSocket(`https://coinbuddybot.herokuapp.com:8000`);
 
 function getData(cb) {
   socket.on("priceData", data => {

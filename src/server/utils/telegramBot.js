@@ -4,7 +4,7 @@ const base64url = require("base64url");
 const User = require("../models/User");
 const Prices = require("../models/Prices");
 const TrackedCoins = require("../models/TrackedCoins");
-const jokes = require("./jokes")
+const jokes = require("./jokes");
 const token = config.TELEGRAM_TOKEN;
 
 // Create a bot that uses 'polling' to fetch new updates
@@ -21,16 +21,21 @@ bot.onText(/\/start (.+)/, (msg, match) => {
   const chatId = msg.chat.id;
   const decodedEmail = base64url.decode(match[1]); // the captured "whatever"
 
-  let response = `Hello! This chat is now connected to the ${decodedEmail} account.  \n\nYou have succesfully registered your account for notifications from me 😃 ! \n\nType /help anytime to checkout available commands!`
+  let response = `Hello! This chat is now connected to the ${decodedEmail} account.  \n\nYou have succesfully registered your account for notifications from me 😃 ! \n\nType /help anytime to checkout available commands!`;
   if (msg.chat.first_name) {
-    response = `Hi, *${msg.chat.first_name}*! This chat is now connected to the ${decodedEmail} account.  \n\nYou have succesfully registered your account for notifications from me 😃 !  \n\nType /help anytime to checkout available commands!`
+    response = `Hi, *${
+      msg.chat.first_name
+    }*! This chat is now connected to the ${decodedEmail} account.  \n\nYou have succesfully registered your account for notifications from me 😃 !  \n\nType /help anytime to checkout available commands!`;
   }
 
-  User.findOneAndUpdate({
-    email: decodedEmail
-  }, {
-    chatId
-  }).then(e => {
+  User.findOneAndUpdate(
+    {
+      email: decodedEmail
+    },
+    {
+      chatId
+    }
+  ).then(e => {
     bot.sendMessage(chatId, response, {
       parse_mode: "Markdown"
     });
@@ -78,7 +83,7 @@ bot.onText(/\/example/, (msg, match) => {
 
 bot.onText(/\/joke/, (msg, match) => {
   const chatId = msg.chat.id;
-  let response = getRandomJoke()
+  let response = getRandomJoke();
   bot.sendMessage(chatId, response, {
     parse_mode: "Markdown"
   });
@@ -86,21 +91,22 @@ bot.onText(/\/joke/, (msg, match) => {
 
 bot.onText(/\/help/, (msg, match) => {
   const chatId = msg.chat.id;
-  let response = "/check all - Get all tracked coins current prices \n/check *symbol* - Get current price for specified coin e.g. ETH \n/joke - Get a joke of course 😁"
+  let response =
+    "/check all - Get all tracked coins current prices \n/check *symbol* - Get current price for specified coin e.g. ETH \n/joke - Get a joke of course 😁";
   bot.sendMessage(chatId, response, {
     parse_mode: "Markdown"
   });
 });
 
 function getRandomJoke() {
-  let rand = Math.floor(Math.random() * Math.floor(jokes.length - 1))
-  return jokes[rand]
+  let rand = Math.floor(Math.random() * Math.floor(jokes.length - 1));
+  return jokes[rand];
 }
 
 function sendCoinPrice(chatId, coin) {
   Prices.find({}).then(result => {
     let coinData = result[0].prices.filter(el => {
-      return el.currency == coin;;
+      return el.currency == coin;
     });
     bot.sendMessage(
       chatId,
@@ -122,7 +128,7 @@ function checkTrackedCoinsTelegram() {
         if (
           coinData[0].price >=
           Number(element.price_current) +
-          Number(element.price_current) * (Number(element.target_price) / 100)
+            Number(element.price_current) * (Number(element.target_price) / 100)
         ) {
           targetReached = true;
         }
@@ -137,14 +143,18 @@ function checkTrackedCoinsTelegram() {
               }$! Visit CoinBotBuddy.com to select new tracking targets :)`
             );
             targetReached = false;
-            TrackedCoins.findOneAndUpdate({
-              email: user[0].email,
-              coin: element.coin
-            }, {
-              telegram_track: false
-            }, {
-              upsert: true
-            }).then();
+            TrackedCoins.findOneAndUpdate(
+              {
+                email: user[0].email,
+                coin: element.coin
+              },
+              {
+                telegram_track: false
+              },
+              {
+                upsert: true
+              }
+            ).then();
           }
         });
       });
@@ -156,7 +166,7 @@ function checkAllTrackedCoins(chatId) {
   User.find({
     chatId: chatId
   }).then(user => {
-    TrackedCoins.find({}).then(result => {
+    TrackedCoins.find({ email: user[0].email }).then(result => {
       result.forEach(element => {
         Prices.find({}).then(result => {
           let coinData = result[0].prices.filter(el => {

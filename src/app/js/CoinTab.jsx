@@ -53,14 +53,14 @@ const CoinTab = props => {
         borderDash: [],
         borderDashOffset: 0.0,
         borderJoinStyle: "miter",
-        pointBorderColor: "rgba(75,192,192,1)",
+        pointBorderColor: `rgba(${mainColor},1)`,
         pointBackgroundColor: "#fff",
         pointBorderWidth: 1,
         pointHoverRadius: 2,
-        pointHoverBackgroundColor: "rgba(75,192,192,1)",
+        pointHoverBackgroundColor: `rgba(${mainColor},1)`,
         pointHoverBorderColor: "rgba(220,220,220,1)",
         pointHoverBorderWidth: 2,
-        pointRadius: 1,
+        pointRadius: 3,
         pointHitRadius: 10,
         data: selectedTimeFrame.data
       }
@@ -127,9 +127,9 @@ const CoinTab = props => {
         pointBorderWidth: 1,
         pointHoverRadius: 2,
         pointHoverBackgroundColor: `rgba(${sparklineColor},1)`,
-        pointHoverBorderColor: `rgba(220,220,220,1)`,
+        pointHoverBorderColor: "rgba(220,220,220,1)",
         pointHoverBorderWidth: 2,
-        pointRadius: 1,
+        pointRadius: 2,
         pointHitRadius: 10,
         data: props.dayHistory.closes
       }
@@ -202,32 +202,34 @@ const CoinTab = props => {
         <div className="priceDiv">
           <p>Price: </p>
           <div className="price">
-            <span className={`price${props.direction}`}>{props.price} $</span>
+            <span className={`price${props.direction}`}>
+              {Number(props.price).toFixed(4)} $
+            </span>
           </div>
         </div>
         <div className="supplyDiv">
           <p>Coin Supply</p>
-          <div className="supply">{props.supply}</div>
+          <div className="supply">{Number(props.supply).toFixed(2)}</div>
         </div>
         <div className="volumeDiv">
-          <p>Transaction Volume Last 24H</p>
+          <p>Transaction Vol Last 24H</p>
           <div className="supply">
             {millify(props.totalVolume * props.price)} $
           </div>
         </div>
         <div className="sparklineDiv">
-          <p>Last 24h</p>
           <Line
             data={sparklineData}
             options={sparklineStyle}
             width={200}
             height={80}
           />
+          <p>Last 24h</p>
         </div>
         <div className="trackButton">
           <Link className="link" to="/profile/addcoin">
             <button
-              onClick={e => props.setSelectedCoin(props.name)}
+              onClick={e => props.setSelectedCoin(props)}
               className="btn btnTrackCoin"
             >
               Track Coin
@@ -292,12 +294,7 @@ const CoinTab = props => {
             >
               Year
             </button>
-            <Line
-              data={data}
-              options={mainChartStyle}
-              width={600}
-              height={240}
-            />
+            <Line data={data} options={mainChartStyle} />
           </div>
         </div>
       </Collapse>

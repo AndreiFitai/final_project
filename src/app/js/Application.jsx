@@ -32,8 +32,10 @@ class Application extends React.Component {
     });
 
     checkUserChatId((err, data) => {
+      console.log("app got data", data);
       let newUser = this.state.user;
       newUser.chatId = data;
+      console.log(newUser);
       this.setState({
         user: newUser
       });
@@ -120,43 +122,23 @@ class Application extends React.Component {
     });
   }
 
-  _handleTrackChange(type, val, coin, price_current, target) {
+  _handleTrackChange(id, val, coin, price_current, target) {
     let tempTracked = this.state.trackedCoins.map(el => {
       if (el.coin === coin) {
         el.price_current = price_current;
         el.target_price = target;
-        if (type === "telegram") {
-          el.telegram_track = val == true ? true : false;
-          api
-            .post("/api/coin/addcoin", {
-              email: this.state.user.email,
-              coin: coin,
-              price_current: price_current,
-              target_price: target,
-              telegram_track: val == true ? true : false,
-              slack_track: el.slack_track
-            })
-            .then();
-        } else {
-          el.slack_track = val === true ? true : false;
-          api
-            .post("/api/coin/addcoin", {
-              email: this.state.user.email,
-              coin: coin,
-              price_current: price_current,
-              target_price: target,
-              telegram_track: el.telegram_track,
-              slack_track: val == true ? true : false
-            })
-            .then();
-        }
-        return el;
+        el.telegram_track = val == true ? true : false;
+        api
+          .post("/api/coin/notification", {
+            id: id,
+            price_current: price_current,
+            target_price: target,
+            telegram_track: val == true ? true : false
+          })
+          .then();
       }
-      return el;
     });
-    this.setState({
-      trackedCoins: tempTracked
-    });
+    this._setTrackedCoins();
   }
 
   _setUser(init) {
@@ -183,12 +165,14 @@ class Application extends React.Component {
       let data = this.state.trackedCoins;
       data.push(coin);
       this.setState({ trackedCoins: data });
-    } else if (this.state.user)
+    }
+    if (this.state.user) {
       api
         .get(`/api/coin/trackedCoins/${this.state.user.email}`)
         .then(result => {
           this.setState({ trackedCoins: result });
         });
+    }
   }
 
   _setGraphState(isOpen, timeframe, index) {

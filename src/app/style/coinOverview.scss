@@ -3,14 +3,14 @@
   background: white;
   margin: 10px 0;
   border: 2px solid purple;
-  border-radius: 10px;
+  border-radius: 15px;
 
   .coinHeader {
-    height: 7vh;
+    height: 80px;
     width: 80vw;
     background: white;
     margin: 10px 0;
-    border-radius: 10px;
+    border-radius: 15px;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
@@ -18,28 +18,94 @@
 
     .btnTrackCoin {
       height: 7vh;
+      width: 70px;
       box-sizing: 0;
-      border-radius: 10px;
+      border-radius: 15px;
     }
 
     .btnDetails {
       height: 7vh;
+      width: 70px;
       box-sizing: 0;
-      border-radius: 10px;
+      border-radius: 15px;
     }
 
+
+    @media (max-width: 1400px) {
+      .supplyDiv {
+        display: none;
+      }
+
+
+      .coinDetails {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+      }
+
+    }
+
+    @media (max-width: 1150px) {
+      .volumeDiv {
+        display: none;
+      }
+    }
+
+    @media (max-width: 880px) {
+
+      .fullName {
+        display: none;
+      }
+
+      .iconAndName {
+        width: 100px !important;
+      }
+    }
+
+    @media (max-width: 720px) {
+
+      .sparklineDiv {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 460px) {
+
+      .icon {
+        display: none !important;
+      }
+    }
+
+    .priceDiv {
+      width: 90px;
+      margin: 0 10px;
+    }
+
+    .supplyDiv {
+      width: 160px;
+    }
+
+
     .iconAndName {
-      width: 15vw;
+      width: 240px;
       display: flex;
       flex-flow: row nowrap;
-      justify-content: space-between;
+      justify-content: start;
+
+      >* {
+        margin: 0 10px;
+      }
     }
 
     .sparklineDiv {
-      width: 15vw;
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: space-between;
+      width: 200px;
+      display: block;
+
+      p {
+        margin: 0;
+        font-size: 14px;
+      }
+
     }
 
     .pricesame {
@@ -85,8 +151,8 @@
 
   .btn {
     background-color: white;
-    border: 1px solid purple;
-    border-radius: 5px;
+    border: 2px solid purple;
+    border-radius: 10px;
     color: black;
     padding: 5px 10px;
     margin: 5px;
@@ -107,30 +173,61 @@
     color: white;
   }
 
+  @media (max-width: 1400px) {
+
+    .coinDeets {
+      display: none;
+    }
+
+  }
+
+  @media (max-width: 850px) {
+
+    .mainChart {
+      width: 55vw !important;
+      min-width: 300px !important;
+    }
+
+  }
+
   .coinDetails {
     display: flex;
     flex-flow: row nowrap;
 
     .mainChart {
       padding-top: 30px;
-      width: 1000px;
+      width: calc((120vw - 300px)/2);
+      min-width: 690px;
     }
 
     .coinDeets {
-      width: 25vw;
+      width: 420px;
       margin: 20px;
       border: 2px solid purple;
-      border-radius: 10px;
+      border-radius: 15px;
+
 
       .coinDeetsTitle {
         margin: 5px auto;
         width: 90%;
       }
+
       .coinDeetsTable {
-        margin: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
+
+      td {
+        padding: 5px;
+      }
+
+      td:nth-child(2) {
+        text-align: right
+      }
+
       .grey-row {
-        background: lightgray;
+        background: rgb(238, 238, 238);
       }
     }
   }

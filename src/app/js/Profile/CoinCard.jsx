@@ -34,7 +34,9 @@ class CoinDeets extends React.Component {
       <div className="coinCard">
         <div className="coinTrackedDetails">
           <div className="nameAndPrice">
-            <div>{this.props.coin.coin}</div>
+            <div>
+              <h3>{this.props.coin.coin}</h3>
+            </div>
             <div> </div>
             <div
               className={`price price${
@@ -43,6 +45,12 @@ class CoinDeets extends React.Component {
             >
               Current price: {price} $
             </div>
+          </div>
+          <div className="coinImage">
+            <img
+              src={`https://www.cryptocompare.com${this.props.coin.imgUrl}`}
+              alt=""
+            />
           </div>
         </div>
 
@@ -57,6 +65,7 @@ class CoinDeets extends React.Component {
                 value={Number(this.state.value).toFixed(2)}
                 onChange={e => this._setValue(e.target.value)}
                 step="0.1"
+                max="100"
               />
               %
             </span>
@@ -64,14 +73,14 @@ class CoinDeets extends React.Component {
           </div>
           <div className="notifSwitches">
             <div className="telegramSwitch">
-              <p>Chat Notifications</p>
+              <p>BuddyBot Notifications</p>
               <label className="switch">
                 <input
                   type="checkbox"
                   checked={this.props.coin.telegram_track}
                   onChange={e =>
                     this.props.handleTrackChange(
-                      "telegram",
+                      this.props.coin._id,
                       e.target.checked,
                       this.props.coin.coin,
                       this.props.price.price,

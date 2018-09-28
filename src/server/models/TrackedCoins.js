@@ -23,9 +23,9 @@ const trackedCoinsSchema = new Schema({
   telegram_track: {
     type: Boolean
   },
-  slack_track: {
-    type: Boolean
-  }
+  imgUrl: {
+    type: String
+  },
 });
 
 module.exports = mongoose.model("TrackedCoins", trackedCoinsSchema);

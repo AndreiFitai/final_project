@@ -10,10 +10,14 @@ function getData(cb) {
 
 function checkUserChatId(cb) {
   socket.on("chatId", data => {
-    console.log(data);
+    console.log('got data on front end', data);
+
     cb(null, data);
   });
   socket.emit("checkChatId", 5000);
 }
 
-export { getData, checkUserChatId };
+export {
+  getData,
+  checkUserChatId
+};

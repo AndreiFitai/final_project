@@ -16,62 +16,62 @@ const CoinDeets = props => {
           <tbody>
             <tr>
               <td>Price Yesterday:</td>
-              <td>{props.dash.dayOpen} $</td>
+              <td>{Number(props.dash.dayOpen).toFixed(4)} $</td>
             </tr>
 
             <tr className="grey-row">
               <td>Volume over past day:</td>
-              <td>{props.dash.dayVolume} </td>
+              <td>{Number(props.dash.dayVolume).toFixed(4)} </td>
             </tr>
 
             <tr>
               <td>Volume over the previous day:</td>
-              <td>{props.dash.dayOpenVolume} </td>
+              <td>{Number(props.dash.dayOpenVolume).toFixed(4)} </td>
             </tr>
 
             <tr className="grey-row">
               <td>Price one week ago:</td>
-              <td>{props.dash.weekOpen} $$</td>
+              <td>{Number(props.dash.weekOpen).toFixed(4)} $$</td>
             </tr>
 
             <tr>
               <td>Volume over the past week:</td>
-              <td> {props.dash.weekVolume} </td>
+              <td> {Number(props.dash.weekVolume).toFixed(4)} </td>
             </tr>
 
             <tr className="grey-row">
               <td>Volume over the previous week:</td>
-              <td>{props.dash.weekOpenVolume} $</td>
+              <td>{Number(props.dash.weekOpenVolume).toFixed(4)} $</td>
             </tr>
 
             <tr>
               <td>Price one month ago:</td>
-              <td>{props.dash.monthOpen} $</td>
+              <td>{Number(props.dash.monthOpen).toFixed(4)} $</td>
             </tr>
 
             <tr className="grey-row">
               <td>Volume over the past 30 days:</td>
-              <td>{props.dash.monthVolume}</td>
+              <td>{Number(props.dash.monthVolume).toFixed(4)}</td>
             </tr>
             <tr>
               <td>Volume over the previous 30 days:</td>
-              <td>{props.dash.monthOpenVolume}</td>
+              <td>{Number(props.dash.monthOpenVolume).toFixed(4)}</td>
             </tr>
             <tr className="grey-row">
               <td>Price on year ago:</td>
-              <td>{props.dash.yearOpen} $</td>
+              <td>{Number(props.dash.yearOpen).toFixed(4)} $</td>
             </tr>
             <tr>
               <td>Volume over the past year:</td>
-              <td>{props.dash.yearVolume} </td>
+              <td>{Number(props.dash.yearVolume).toFixed(4)} </td>
             </tr>
             <tr className="grey-row">
               <td>Volume over the previous year:</td>
-              <td>{props.dash.yearOpenVolume} </td>
+              <td>{Number(props.dash.yearOpenVolume).toFixed(4)} </td>
             </tr>
             <tr>
               <td>Highest price:</td>
-              <td>{props.dash.high} $</td>
+              <td>{Number(props.dash.high).toFixed(4)} $</td>
             </tr>
             <tr className="grey-row">
               <td>Date of highest price:</td>
@@ -83,11 +83,11 @@ const CoinDeets = props => {
             </tr>
             <tr className="grey-row">
               <td>Circulating supply:</td>
-              <td>{props.dash.availableSupply} </td>
+              <td>{Number(props.dash.availableSupply).toFixed(4)} </td>
             </tr>
             <tr>
               <td>Max available supply:</td>
-              <td>{props.dash.maxSupply} </td>
+              <td>{Number(props.dash.maxSupply).toFixed(4)} </td>
             </tr>
           </tbody>
         </table>

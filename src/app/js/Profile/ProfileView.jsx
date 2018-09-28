@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import CoinCard from "./CoinCard";
 import api from "../utils/api";
 import base64url from "base64url";
+import checkmark from "../../assets/check-mark-2-128.png";
 
 class ProfileView extends Component {
   constructor(props) {
@@ -13,7 +14,6 @@ class ProfileView extends Component {
   }
 
   _removeCoin(id) {
-    console.log("id called in profile view", id);
     api.post("/api/coin/removecoin", { id }).then(this.props.setTrackedCoins());
   }
 
@@ -32,6 +32,7 @@ class ProfileView extends Component {
         />
       );
     });
+
     let telegramPrompt;
     if (!this.props.user.chatId) {
       telegramPrompt = (
@@ -42,26 +43,35 @@ class ProfileView extends Component {
             )}`}
             target="_blank"
           >
-            <div> Connect to CoinBuddyBot on Telegram to recieve updates !</div>
+            <div className="connectLink">
+              Click here to connect to CoinBuddyBot!
+            </div>
           </a>
-          <br />
-          <img src={this.props.user.qrCode} alt="qrcode" />
+          <div className="or">Or scan the QR Code</div>
+          <img
+            className="qrCodeImg"
+            src={this.props.user.qrCode}
+            alt="qrcode"
+          />
         </div>
       );
     } else {
       telegramPrompt = (
-        <div className="telegramConnect">Connected to CoinBuddyBot !</div>
+        <div className="telegramConnect">
+          <div className="connectConfirm">Connected to CoinBuddyBot !</div>
+          <div className="checkmark">
+            <img src={checkmark} />
+          </div>
+        </div>
       );
     }
     return (
       <div>
         <div className="userHeader">
-          <div className="userPic">
+          <div className="user">
             <img src={this.props.user.profilePicture} alt="" />
+            <div>Welcome back {this.props.user.email} ! </div>
           </div>
-          <br />
-          <div>Welcome back {this.props.user.email} ! </div>
-          <br />
           {telegramPrompt}
         </div>
         <div className="cardContainer">{coinCards}</div>

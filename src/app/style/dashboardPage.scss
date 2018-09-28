@@ -2,15 +2,53 @@
   height: 20vh;
   display: flex;
   flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
   margin: 20px 10vw;
 
-  .userPic {
+  .user {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+
     img {
-      height: 80px;
-      width: 80px;
+      height: 150px;
+      width: 150px;
       border: 2px solid purple;
       border-radius: 10px;
+      margin: 10px;
     }
+  }
+
+  .telegramConnect {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    .qrCodeImg {
+      border: 2px solid purple;
+      border-radius: 15px;
+    }
+
+    .connectLink {
+      text-align: center;
+      width: 120px;
+      margin: 15px;
+    }
+
+    .or {
+      width: 80px;
+      font-size: 14px;
+    }
+
+    .checkmark {
+      margin: 10px;
+
+      img {
+        width: 80px;
+      }
+    }
+
   }
 }
 
@@ -28,7 +66,7 @@
     min-width: 325px;
     min-height: 250px;
     border: 2px solid purple;
-    border-radius: 10px;
+    border-radius: 15px;
     margin: 20px;
     padding: 20px;
     display: flex;
@@ -37,8 +75,21 @@
     align-content: center;
 
     .coinTrackedDetails {
-      .price {
-        display: inline-block;
+      display: flex;
+      flex-flow: row nowrap;
+      align-content: center;
+      justify-content: space-evenly;
+
+      .nameAndPrice {
+        width: 500px;
+
+        .price {
+          display: inline-block;
+        }
+
+        h3 {
+          margin: 0;
+        }
       }
 
       @keyframes down {
@@ -76,12 +127,21 @@
       }
     }
 
+    .coinImage {
+      img {
+        background: white;
+        border-radius: 10px;
+        height: 5vh;
+      }
+    }
+
     .notifContainer {
       .notifSettings {
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
         justify-content: space-between;
+
         input[type="number"] {
           font-size: 18px;
           width: 75px;
@@ -92,6 +152,7 @@
         .valuePadding {
           border: 0px inset #ccc;
         }
+
         .valuePadding input {
           border: none;
           padding: 0px;
@@ -102,6 +163,47 @@
       .notifSwitches {
         display: flex;
         flex-flow: row nowrap;
+        align-content: center;
+        justify-items: baseline;
+
+        .removeCoin {
+          margin: auto;
+
+          .btn {
+            background-color: white;
+            border: 2px solid purple;
+            border-radius: 10px;
+            color: black;
+            padding: 5px 10px;
+            margin: 5px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            -webkit-transition-duration: 0.4s;
+            transition-duration: 0.4s;
+          }
+
+          .btn:focus {
+            outline: 0;
+          }
+
+          .btn:hover {
+            background-color: purple;
+            color: white;
+          }
+
+        }
+
+        .telegramSwitch {
+          display: flex;
+          flex-flow: column;
+          align-items: center;
+
+          p {
+            text-align: center;
+          }
+        }
       }
 
       /* The switch - the box around the slider */
@@ -142,15 +244,15 @@
         transition: 0.4s;
       }
 
-      input:checked + .slider {
+      input:checked+.slider {
         background-color: purple;
       }
 
-      input:focus + .slider {
+      input:focus+.slider {
         box-shadow: 0 0 1px purple;
       }
 
-      input:checked + .slider:before {
+      input:checked+.slider:before {
         -webkit-transform: translateX(26px);
         -ms-transform: translateX(26px);
         transform: translateX(26px);

@@ -45,7 +45,7 @@ const Home = props => {
     );
   });
 
-  return <div className="container">{props.data ? coinTabs : <div />}</div>;
+  return <div className=" main">{props.data ? coinTabs : <div />}</div>;
 };
 
 export default Home;

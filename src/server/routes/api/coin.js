@@ -73,33 +73,53 @@ router.get("/dashboards", (req, res) => {
 });
 
 router.post("/addcoin", (req, res) => {
-  const { email, coin, price_current, target_price, telegram_track } = req.body;
-  TrackedCoins.findOneAndUpdate(
-    {
-      email,
-      coin
-    },
-    {
-      email,
-      coin,
-      price_current,
-      target_price,
-      telegram_track
-    },
-    {
-      upsert: true
-    }
-  ).then();
-  res.send("ok");
+  const {
+    email,
+    coin,
+    price_current,
+    target_price,
+    telegram_track,
+    imgUrl
+  } = req.body;
+
+  new TrackedCoins({
+    email,
+    coin,
+    price_current,
+    target_price,
+    telegram_track,
+    imgUrl
+  }).save().then(newTracked => {
+    res.send(newTracked);
+  })
+
 });
 
 router.post("/removecoin", (req, res) => {
-  console.log("remove coin api called", req.body);
   TrackedCoins.findByIdAndRemove({
     _id: mongoose.Types.ObjectId(req.body.id)
   }).then();
   res.send("ok");
 });
+
+router.post("/notification", (req, res) => {
+  const {
+    id,
+    price_current,
+    target_price,
+    telegram_track,
+  } = req.body;
+  console.log(req.body)
+  TrackedCoins.findByIdAndUpdate({
+    _id: id
+  }, {
+    price_current,
+    target_price,
+    telegram_track,
+  }).then();
+  res.send("ok");
+});
+
 
 router.get("/trackedCoins/:email", (req, res) => {
   const email = req.params.email;

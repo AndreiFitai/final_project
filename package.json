@@ -19,7 +19,7 @@
     "bcrypt": "^3.0.1",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
-    "chart.js": "^2.7.2",
+    "chart.js": "^2.9.4",
     "cloudinary": "^1.11.0",
     "compression": "^1.7.3",
     "cron": "^1.4.1",
